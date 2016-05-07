@@ -1,17 +1,34 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Title of the document</title>
-        <script type="text/javascript"
-            src="js/libs/jquery-2.2.3.min.js"></script>
-        <script type="text/javascript">
-        $(document).ready(function () {
-            $("#exemple").text("Text amb Javascript");
+        <meta charset="UTF-8">
+        <title>SaveMate - My Ecological Footprint</title>
+        <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.min.css">
+        <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
+        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="css/tabs-custom.css">
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+        <script src="js/libs/jquery-2.2.3.min.js"></script>
+        <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script>
+        $(function() {
+            // Tabs
+            $( "#tabs" ).tabs({ active: 2 });
+            $("#tabs>ul>li>a").unbind("click");         
         });
-        </script>        
+        </script>
     </head>
     <body>
-        <div>Text sense Javascript</div>
-        <div id="exemple"></div>
+        <div id="tabs">
+            <ul>
+                <li><a href="principal.html"><span class="tabs-title"><img src="images/logo.png" alt="SaveMate" />SaveMate</span></a></li>
+                <li><a href="consultarconsumo.html">My Energy Usage</a></li>
+                <li><a href="#tab-current">My Ecological Footprint</a></li>
+                <li><a href="actualizarperfil.html">Update My Profile</a></li>
+                <li><a href="actualizarfacturas.html">Add My Invoices</a></li>
+            </ul>
+            <div id="tab-current">
+                Por hacer.
+            </div>
     </body>
 </html>
