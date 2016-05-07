@@ -1,17 +1,170 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Title of the document</title>
-        <script type="text/javascript"
-            src="js/libs/jquery-2.2.3.min.js"></script>
-        <script type="text/javascript">
-        $(document).ready(function () {
-            $("#exemple").text("Text amb Javascript");
+        <title>SaveMate - Main Page</title>
+        <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.min.css">
+        <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
+        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="css/tabs-custom.css">
+        <script src="js/libs/jquery-2.2.3.min.js"></script>
+        <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script src="js/tabs-custom.js"></script>
+        <script>
+        $(function() {
+            $( "#progressbar-saver" ).progressbar({ value: 80 });
+            $("#progressbar-saver > div").css({ 'background-color': 'green' });
+            $( "#progressbar-ecologist" ).progressbar({ value: 50 });
+            $("#progressbar-ecologist > div").css({ 'background-color': 'orange' });
         });
-        </script>        
+        </script>
+        <style>
+        /* http://stackoverflow.com/a/9431102 */
+        .wrapper {
+            width:100%;
+            height:auto;
+            /* border:1px solid green; */
+            vertical-align: middle;
+            font-size: 0;
+            margin-bottom: 10px;
+        }
+
+        .left-div {
+            width: 10%;
+            /* border:1px solid blue; */
+            display: inline-block;
+            font-size: initial;
+            text-align: center;
+
+            /* IE 7 hack */
+            *zoom:1;
+            *display: inline;
+            vertical-align: middle;
+        }
+
+        .right-div {
+            width: 85%;
+            /* border:1px solid red; */
+            display: inline-block;  
+            font-size: initial;
+
+            /* IE 7 hack */
+            *zoom:1;
+            *display: inline;
+            vertical-align: middle;
+        }
+
+        .boton-grande
+        {
+            display: inline-block;
+            width: 45%;
+            text-align: center;
+            border: 1px solid black;
+            text-decoration: none;
+        }
+
+        .boton-grande > h2
+        {
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .boton-grande > p
+        {
+            
+        }
+  
+  </style>
     </head>
     <body>
-        <div>Text sense Javascript</div>
-        <div id="exemple"></div>
+        <div id="tabs">
+            <ul>
+                <li><a href="#tab-current"><span class="tabs-title"><img src="images/logo.png" alt="SaveMate" />SaveMate</span></a></li>
+                <li><a href="consultarconsumo.html">My Energy Usage</a></li>
+                <li><a href="consultarhuella.html">My Ecological Footprint</a></li>
+                <li><a href="actualizarperfil.html">Update My Profile</a></li>
+                <li><a href="actualizarfacturas.html">Add My Invoices</a></li>
+            </ul>
+            <div id="tab-current" style="overflow:hidden;">
+                <div style="width: 25%; float:left;">
+                    <h1>My Overview</h1>
+                    <img src="images/placeholder_human.png" width="50%;" />
+                    <p>Welcome, <b>John Smith</b></p>
+                    <div>
+                        <span style="text-align: center; display: inline-block; width: 15%;"><img src="images/money_icon.png" alt="Money" style="height: 25px;" /></span><div id="progressbar-saver" style="display: inline-block; width: 40%; height: 25px; margin-right: 12px;"></div> Advanced Saver<br />
+                        <span style="text-align: center; display: inline-block; width: 15%;"><img src="images/plant_icon.png" alt="Plant" style="height: 25px;" /></span><div id="progressbar-ecologist" style="display: inline-block; width: 40%; height: 25px; margin-right: 12px; "></div>Average Ecologist<br />
+                    </div>
+                    <h2>Notifications</h2>
+                    <div class="wrapper">
+                        <div class="left-div">
+                            <img src="images/bell_icon.png" alt="Bell" style="height: 25px;" />
+                        </div>  
+                        <div class="right-div">
+                            You haven't introduced your invoice for the last month. <a href="TODO.html">Add it now</a>.
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="left-div">
+                            <img src="images/bell_icon.png" alt="Bell" style="height: 25px;" />
+                        </div>  
+                        <div class="right-div">
+                            You haven't updated your appliances for 3 months. <a href="TODO.html">Update it now</a> or <a href="TODO.html">there hasn't been any change recently</a>.
+                        </div>
+                    </div>
+                    <h2>Did you know?</h2>
+                    <div class="wrapper">
+                        <div class="left-div">
+                            <img src="images/tree_icon.png" alt="Tree" style="height: 25px;" />
+                        </div>  
+                        <div class="right-div">
+                            Your energy consumption increased 23% in the last three months. <a href="TODO.html">Check it now</a>.
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="left-div">
+                            <img src="images/chart_icon.png" alt="Chart" alt="Chart" style="height: 25px; " />
+                        </div>  
+                        <div class="right-div">
+                            You reduced your CO<sup>2</sup> emissions in the last year by 200 kilograms. <a href="TODO.html">Check your ecological footprint</a>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Separador -->
+                <div style="position:absolute; left:25%; top:10%; bottom:10%; border-left:1px solid black;"></div>
+
+                <div style="width: 75%; float: right;">
+                    <h1>Improving my usage patterns</h1>
+                    <div>
+                        <a class="boton-grande" href="consultarconsumo.html">
+                            <img src="images/chart_image.png" alt="Chart" style="width: 35%" />
+                            <br />
+                            <h2>My Energy Consumption</h2>
+                            <p><strong>Average monthly consumption:</strong> 400kWh</p>
+                        </a>
+
+                        <a class="boton-grande" href="consultarhuella.html">
+                            <img src="images/tree_image.png" alt="Tree" style="width: 35%" />
+                            <h2>My Ecological Footprint</h2>
+                            <p><strong>Footprint:</strong> 2.365 kilograms of CO<sup>2</sup> per year</p>
+                        </a>
+                    </div>
+                    <h1>Keeping my profile up to date</h1>
+                    <div style="overflow:hidden;">
+                        <a class="boton-grande" href="actualizarperfil.html">
+                            <img src="images/blueprint_image.png" alt="Blueprint" style="width: 35%" />
+                            <br />
+                            <h2>Update my appliances</h2>
+                            <p><strong>Last updated:</strong> 20 of January of 2016</p>
+                        </a>
+
+                        <a class="boton-grande" href="actualizarfacturas.html">
+                            <img src="images/invoice_image.png" alt="Invoice" style="width: 35%" />
+                            <h2>Add my recent invoices</h2>
+                            <p><strong>Last invoice:</strong> February 2016 (150&euro;, +20%)</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
