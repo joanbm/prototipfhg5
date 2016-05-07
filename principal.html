@@ -6,15 +6,74 @@
         <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
         <link rel="stylesheet" href="css/global.css">
         <link rel="stylesheet" href="css/tabs-custom.css">
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
         <script src="js/libs/jquery-2.2.3.min.js"></script>
         <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script src="js/tabs-custom.js"></script>
         <script>
         $(function() {
+            // Progress bars
             $( "#progressbar-saver" ).progressbar({ value: 80 });
             $("#progressbar-saver > div").css({ 'background-color': 'green' });
             $( "#progressbar-ecologist" ).progressbar({ value: 50 });
             $("#progressbar-ecologist > div").css({ 'background-color': 'orange' });
+
+            // Tooltips
+            $( document ).tooltip({
+                items: "[data-hover-title]",
+                content: function() {
+                    var element = $( this );
+                    var text = element.text();
+                    return "<h1>"+element.attr( "data-hover-title" )+"</h1><p>" + element.attr( "data-hover-detail" ) + "</p>";
+                }
+            });
+
+            // Add invoice links
+            var dialog = $( "#dialog-invoice" ).dialog({
+                autoOpen: false,
+                height: 400,
+                width: 400,
+                modal: true,
+                buttons: {
+                    "Save": function() {
+                        $("#notification-rem-1").fadeOut(300, function() { $(this).remove(); });
+                        dialog.dialog( "close" );
+                    },
+                    Cancel: function() {
+                        dialog.dialog( "close" );
+                    }
+                },
+                close: function() {
+                    $("#dialog-invoice-amount").removeClass("is_changed");
+                    $("#dialog-invoice-consumption").removeClass("is_changed");
+                }
+            });
+
+            $( "#add-invoice-link" ).on( "click", function() {
+                dialog.find("form")[0].reset();
+                dialog.dialog( "open" );
+                return false;
+            });
+
+            $("#dialog-invoice-amount").on("change keydown paste input", function() {
+                $("#dialog-invoice-amount").addClass("is_changed");
+                if (!$("#dialog-invoice-consumption").hasClass("is_changed"))
+                    $("#dialog-invoice-consumption").val(($("#dialog-invoice-amount").val() / 0.16).toFixed(2));
+            });
+
+            $("#dialog-invoice-consumption").on("change keydown paste input", function() {
+                $("#dialog-invoice-consumption").addClass("is_changed");
+                if (!$("#dialog-invoice-amount").hasClass("is_changed"))
+                $("#dialog-invoice-amount").val(($("#dialog-invoice-consumption").val() * 0.16).toFixed(2));
+            });
+
+            // Remove notification link
+            $( "#notification-rem-2-link" ).on( "click", function() {
+                $("#notification-rem-2").fadeOut(300, function() { $(this).remove(); });
+                return false;
+            });
+
+            
         });
         </script>
         <style>
@@ -68,9 +127,8 @@
             text-decoration: underline;
         }
 
-        .boton-grande > p
-        {
-            
+        div.ui-tooltip {
+            max-width: 400px;
         }
   
   </style>
@@ -90,24 +148,24 @@
                     <img src="images/placeholder_human.png" width="50%;" />
                     <p>Welcome, <b>John Smith</b></p>
                     <div>
-                        <span style="text-align: center; display: inline-block; width: 15%;"><img src="images/money_icon.png" alt="Money" style="height: 25px;" /></span><div id="progressbar-saver" style="display: inline-block; width: 40%; height: 25px; margin-right: 12px;"></div> Advanced Saver<br />
+                        <span style="text-align: center; display: inline-block; width: 15%;"><img src="images/money_icon.png" alt="Money" style="height: 25px;" /></span><div id="progressbar-saver" style="display: inline-block; width: 40%; height: 25px; margin-right: 12px;"></div>Advanced Saver<br />
                         <span style="text-align: center; display: inline-block; width: 15%;"><img src="images/plant_icon.png" alt="Plant" style="height: 25px;" /></span><div id="progressbar-ecologist" style="display: inline-block; width: 40%; height: 25px; margin-right: 12px; "></div>Average Ecologist<br />
                     </div>
                     <h2>Notifications</h2>
-                    <div class="wrapper">
+                    <div class="wrapper" id="notification-rem-1">
                         <div class="left-div">
                             <img src="images/bell_icon.png" alt="Bell" style="height: 25px;" />
                         </div>  
                         <div class="right-div">
-                            You haven't introduced your invoice for the last month. <a href="TODO.html">Add it now</a>.
+                            You haven't introduced your invoice for the last month. <a href="" id='add-invoice-link'>Add it now</a>.
                         </div>
                     </div>
-                    <div class="wrapper">
+                    <div class="wrapper" id="notification-rem-2">
                         <div class="left-div">
                             <img src="images/bell_icon.png" alt="Bell" style="height: 25px;" />
                         </div>  
                         <div class="right-div">
-                            You haven't updated your appliances for 3 months. <a href="TODO.html">Update it now</a> or <a href="TODO.html">there hasn't been any change recently</a>.
+                            You haven't updated your appliances for 3 months. <a href="actualizarperfil.html">Update it now</a> or <a href="#" id="notification-rem-2-link">there hasn't been any change recently</a>.
                         </div>
                     </div>
                     <h2>Did you know?</h2>
@@ -116,7 +174,7 @@
                             <img src="images/tree_icon.png" alt="Tree" style="height: 25px;" />
                         </div>  
                         <div class="right-div">
-                            Your energy consumption increased 23% in the last three months. <a href="TODO.html">Check it now</a>.
+                            Your energy consumption increased 23% in the last three months. <a href="consultarconsumo.html">Check it now</a>.
                         </div>
                     </div>
                     <div class="wrapper">
@@ -124,7 +182,7 @@
                             <img src="images/chart_icon.png" alt="Chart" alt="Chart" style="height: 25px; " />
                         </div>  
                         <div class="right-div">
-                            You reduced your CO<sup>2</sup> emissions in the last year by 200 kilograms. <a href="TODO.html">Check your ecological footprint</a>.
+                            You reduced your CO<sup>2</sup> emissions in the last year by 200 kilograms. <a href="consultarhuella.html">Check your ecological footprint</a>.
                         </div>
                     </div>
                 </div>
@@ -132,17 +190,18 @@
                 <!-- Separador -->
                 <div style="position:absolute; left:25%; top:10%; bottom:10%; border-left:1px solid black;"></div>
 
+                <!-- TOOD hover -->
                 <div style="width: 75%; float: right;">
                     <h1>Improving my usage patterns</h1>
                     <div>
-                        <a class="boton-grande" href="consultarconsumo.html">
+                        <a class="boton-grande" href="consultarconsumo.html" data-hover-title="Average monthly consumption" data-hover-detail="In this section, you can check how much energy you have used in the previous months.">
                             <img src="images/chart_image.png" alt="Chart" style="width: 35%" />
                             <br />
                             <h2>My Energy Consumption</h2>
                             <p><strong>Average monthly consumption:</strong> 400kWh</p>
                         </a>
 
-                        <a class="boton-grande" href="consultarhuella.html">
+                        <a class="boton-grande" href="consultarhuella.html" data-hover-title="My Ecological Footprint" data-hover-detail="In this section, you can check how much your energy usage is affecting the environment.">
                             <img src="images/tree_image.png" alt="Tree" style="width: 35%" />
                             <h2>My Ecological Footprint</h2>
                             <p><strong>Footprint:</strong> 2.365 kilograms of CO<sup>2</sup> per year</p>
@@ -150,14 +209,14 @@
                     </div>
                     <h1>Keeping my profile up to date</h1>
                     <div style="overflow:hidden;">
-                        <a class="boton-grande" href="actualizarperfil.html">
+                        <a class="boton-grande" href="actualizarperfil.html" data-hover-title="Update my appliances" data-hover-detail="In this section, you will be able to let us know which appliances you use in your home.">
                             <img src="images/blueprint_image.png" alt="Blueprint" style="width: 35%" />
                             <br />
                             <h2>Update my appliances</h2>
                             <p><strong>Last updated:</strong> 20 of January of 2016</p>
                         </a>
 
-                        <a class="boton-grande" href="actualizarfacturas.html">
+                        <a class="boton-grande" href="actualizarfacturas.html" data-hover-title="Add my recent invoices" data-hover-detail="In this section, you will be able to let us know the consumption and amount of your recent invoices.">
                             <img src="images/invoice_image.png" alt="Invoice" style="width: 35%" />
                             <h2>Add my recent invoices</h2>
                             <p><strong>Last invoice:</strong> February 2016 (150&euro;, +20%)</p>
@@ -165,6 +224,23 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="dialog-invoice" title="Add my last invoice">
+            <p>Fill in the details of your last invoice to keep your energy consumption information up to date.</p>
+            <p><strong>Invoice Date: </strong>April 2016</p>
+
+            <form>
+                <label for="dialog-invoice-amount">Amount (&euro;):</label>
+                <br />
+                <input type="number" id="dialog-invoice-amount" min="0" step="0.01">
+                <br />
+
+                <label for="dialog-invoice-consumption">Consumption (kWh):</label>
+                <br />
+                <input type="number" id="dialog-invoice-consumption" min="0" step="0.01">
+                <br />
+            </form>
+
         </div>
     </body>
 </html>
