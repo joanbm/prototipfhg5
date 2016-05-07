@@ -5,12 +5,12 @@
     float: none;
 }
 
-#tabs .ui-state-active 
+#tabs > ul .ui-state-active 
 {
     background: #D4EBFF;
 }
 
-#tabs .ui-state-active a {
+#tabs > ul .ui-state-active a {
     color: black;
 }
 

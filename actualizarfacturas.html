@@ -1,17 +1,259 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Title of the document</title>
-        <script type="text/javascript"
-            src="js/libs/jquery-2.2.3.min.js"></script>
-        <script type="text/javascript">
-        $(document).ready(function () {
-            $("#exemple").text("Text amb Javascript");
+        <meta charset="UTF-8">
+        <title>SaveMate - Add your recent invoices</title>
+        <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.min.css">
+        <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
+        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="css/tabs-custom.css">
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+        <script src="js/libs/jquery-2.2.3.min.js"></script>
+        <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script>
+        var pressedGoBack = false;
+
+        function startEditRow(row, isnew) {
+            var markerCell = row.children().last();
+
+            var amountValue = row.find(".table-amount").text();
+            var consumptionValue = row.find(".table-consumption").text();
+            row.find(".table-amount").html($("<input type='number' min='0'>").val(amountValue));
+            row.find(".table-consumption").html($("<input type='number' min='0'>").val(consumptionValue));
+            markerCell.text(!isnew ? "EDITING" : "EDITING_NEW");
+            if (!isnew) {
+                updateRowIconsHover(row);
+            }
+        }
+
+        function endEditRow(row, confirm) {
+            // TODO handle confirm parameter
+            var markerCell = row.children().last();
+
+            if (markerCell.text() == "EDITING_NEW" && !confirm) {
+                row.remove();
+                return;
+            }
+
+
+            if (!confirm) {
+                row.find(".table-amount").text("12345"); // TODO
+                row.find(".table-consumption").text("12345"); // TODO
+            } else {
+                var amountValue = row.find(".table-amount > input").val();
+                var consumptionValue = row.find(".table-consumption > input").val();
+                if (!amountValue || !consumptionValue)
+                {
+                    row.find(".table-amount > input").addClass( "ui-state-error" );
+                    row.find(".table-consumption > input").addClass( "ui-state-error" );
+                    return;
+                }
+                row.find(".table-amount").text(amountValue);
+                row.find(".table-consumption").text(consumptionValue);
+            }
+
+            markerCell.text("NOT_EDITING");
+            updateRowIconsHover(row);
+        }
+        function updateRowIconsHover(row) {
+            var actionsCell = row.children().first();
+            actionsCell.empty();
+
+            var markerCell = row.children().last();
+            var isEditing = markerCell.text() == "EDITING" || markerCell.text() == "EDITING_NEW";
+
+            if (row.index() == 1) {
+                var addIcon = $("<img>").attr("src", "images/add_icon.png").attr("alt", "Add").addClass("hover_icon");
+                addIcon.click(function() {
+                    var newRow = $('<tr><td></td><td>April 2016</td><td><span class="table-amount">0</span> &euro;</td><td><span class="table-consumption">0</span> kWh</td><td style="display:none">NOT_EDITING</th></tr>');
+                    row.after(newRow);
+                    setHoverEventHandler(newRow);
+                    startEditRow(newRow, true);
+                });
+                actionsCell.append(addIcon);
+            } else if (row.index() != 0) {
+                if (!isEditing) {
+                    var editIcon = $("<img>").attr("src", "images/edit_icon.png").attr("alt", "Edit").addClass("hover_icon");
+                    var removeIcon = $("<img>").attr("src", "images/delete_icon.png").attr("alt", "Delete").addClass("hover_icon");
+                    editIcon.click(function() {
+                        startEditRow(row, false);
+                    });
+                    removeIcon.click(function() {
+                        row.remove();
+                    });
+                    actionsCell.append(editIcon);
+                    actionsCell.append(removeIcon);
+                } else {
+                    var tickIcon = $("<img>").attr("src", "images/tick_icon.png").attr("alt", "Confirm").addClass("hover_icon");
+                    var crossIcon = $("<img>").attr("src", "images/cross_icon.png").attr("alt", "Cancel").addClass("hover_icon");
+                    tickIcon.click(function() {
+                        endEditRow(row, true);
+                    });
+                    crossIcon.click(function() {
+                        endEditRow(row, false);
+                    });
+                    actionsCell.append(tickIcon);
+                    actionsCell.append(crossIcon);
+                }
+            }
+        }
+
+        function setHoverEventHandler(elms) {
+            elms.hover(function(event) {
+                var row = $(event.target).closest('tr');
+
+                updateRowIconsHover(row);
+            }, function(event) {
+                var row = $(event.target).closest('tr');
+
+                if (row.index() != 0) {
+                    var actionsCell = row.children().first();
+                    actionsCell.empty();
+                }
+            });
+        }
+
+        $(function() {
+            // Tabs
+            $( "#tabs" ).tabs({ active: 4 });
+            $("#tabs>ul>li>a").unbind("click");
+
+            // Handle save button
+            $( "#save-button" ).button().click(function( event ) {
+                window.location = "principal.html?invoices-saved"; // Pass invoices saved notification as URL param
+                event.preventDefault();
+            });
+
+            // Handle go back button
+            $( "#go-back-button" ).button().click(function( event ) {
+                pressedGoBack = true;
+                window.location = "principal.html";
+                event.preventDefault();
+            });
+
+            $(window).bind('beforeunload', function(){
+                if (pressedGoBack) // prompt confirmation
+                {
+                    pressedGoBack = false;
+                    return 'Are you sure you want to leave?';
+                }
+            });
+
+            setHoverEventHandler($("#invoice-table tr"));
         });
-        </script>        
+        </script>
+        <style>
+        table, td, th {    
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        td {
+            height: 40px;
+        }
+
+        .hover_icon
+        {
+            height: 32px; padding: 0px; cursor: pointer;
+        }
+        </style>
     </head>
     <body>
-        <div>Text sense Javascript</div>
-        <div id="exemple"></div>
+        <div id="tabs">
+            <ul>
+                <li><a href="principal.html"><span class="tabs-title"><img src="images/logo.png" alt="SaveMate" />SaveMate</span></a></li>
+                <li><a href="consultarconsumo.html">My Energy Usage</a></li>
+                <li><a href="consultarhuella.html">My Ecological Footprint</a></li>
+                <li><a href="actualizarperfil.html">Update My Profile</a></li>
+                <li><a href="#tab-current">Add My Invoices</a></li>
+            </ul>
+            <div id="tab-current">
+                <h1>Your invoices</h1>
+
+                <!-- TODO provide invitations -->
+
+                <p>Keeping your invoice information up to date is essential to provide you with accurate energy consumption information and better ways to save money.</p>
+
+                <table id="invoice-table">
+                    <tr>
+                        <th width="5%"></th>
+                        <th width="20%">Date</th>
+                        <th width="20%">Amount (&euro;)</th>
+                        <th width="20%">Consumption (kWh)</th>
+                        <th width="20%" style="display:none">EDITMARKER</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="display:none">ADD_BUTTON_ROW</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>February 2016</td>
+                        <td><span class="table-amount">100</span> &euro;</td>
+                        <td><span class="table-consumption">450</span> kWh</td>
+                        <td style="display:none">NOT_EDITING</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>December 2015</td>
+                        <td><span class="table-amount">120</span> &euro;</td>
+                        <td><span class="table-consumption">550</span> kWh</td>
+                        <td style="display:none">NOT_EDITING</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>October 2015</td>
+                        <td><span class="table-amount">120</span> &euro;</td>
+                        <td><span class="table-consumption">550</span> kWh</td>
+                        <td style="display:none">NOT_EDITING</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>August 2015</td>
+                        <td><span class="table-amount">140</span> &euro;</td>
+                        <td><span class="table-consumption">650</span> kWh</td>
+                        <td style="display:none">NOT_EDITING</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>June 2015</td>
+                        <td><span class="table-amount">120</span> &euro;</td>
+                        <td><span class="table-consumption">550</span> kWh</td>
+                        <td style="display:none">NOT_EDITING</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>April 2015</td>
+                        <td><span class="table-amount">100</span> &euro;</td>
+                        <td><span class="table-consumption">450</span> kWh</td>
+                        <td style="display:none">NOT_EDITING</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>December 2014</td>
+                        <td><span class="table-amount">120</span> &euro;</td>
+                        <td><span class="table-consumption">550</span> kWh</td>
+                        <td style="display:none">NOT_EDITING</th>
+                    </tr>
+                </table>
+
+                <p>After you save, you will be able to browse your updated <a href="consultarconsumo.html">energy consumption</a> information.</p>
+
+                <button id="save-button">Save</button>
+                <button id="go-back-button">Go back</button>
+            </div>
+        </div>
     </body>
 </html>

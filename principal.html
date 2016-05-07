@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
         <title>SaveMate - Main Page</title>
         <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.min.css">
         <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
@@ -10,9 +11,13 @@
         <script src="js/libs/jquery-2.2.3.min.js"></script>
         <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script src="js/libs/jquery-noty-2.3.8.min.js"></script>
-        <script src="js/tabs-custom.js"></script>
+        <script src="js/libs/js-url-2.3.0/url.min.js"></script>
         <script>
         $(function() {
+            // Tabs
+            $( "#tabs" ).tabs();
+            $("#tabs>ul>li>a").unbind("click");
+
             // Progress bars
             $( "#progressbar-saver" ).progressbar({ value: 80 });
             $("#progressbar-saver > div").css({ 'background-color': 'green' });
@@ -42,7 +47,7 @@
                             $("#dialog-invoice-consumption").addClass( "ui-state-error" );
                             return;
                         }
-                        noty({text: 'Your last invoice has been updated in your profile.', type: 'success'});
+                        noty({text: 'Your last invoice has been updated in your profile.', type: 'success', timeout:3000});
                         $("#notification-rem-1").fadeOut(300, function() { $(this).remove(); });
                         dialog.dialog( "close" );
                     },
@@ -82,7 +87,10 @@
                 return false;
             });
 
-            
+            // Invoices saved success notification
+            if (url('?invoices-saved') !== undefined) {
+                noty({text: 'Invoice information saved.', type: 'success', timeout:3000 });
+            }            
         });
         </script>
         <style>
