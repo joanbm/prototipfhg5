@@ -41,7 +41,7 @@
                 modal: true,
                 buttons: {
                     "Save": function() {
-                        if (!$("#dialog-invoice-amount").val() || $("#dialog-invoice-consumption").val()) {
+                        if (!$("#dialog-invoice-amount").val() || !$("#dialog-invoice-consumption").val()) {
                             $("#dialog-invoice-amount").addClass( "ui-state-error" );
                             $("#dialog-invoice-consumption").addClass( "ui-state-error" );
                             return;
