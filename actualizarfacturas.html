@@ -10,24 +10,55 @@
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
         <script src="js/libs/jquery-2.2.3.min.js"></script>
         <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script src="js/libs/jquery-noty-2.3.8.min.js"></script>
         <script>
-        var pressedGoBack = false;
+        var didChanges = false;
+        var pressedSave = false;
+
+        function inEditModeForAny() {
+            var any = false;
+            $("#invoice-table td:last-child").each(function(index, markerCell) {
+                var isEditing = $(markerCell).text() == "EDITING" || $(markerCell).text() == "EDITING_NEW";
+                any = any || isEditing;
+            });
+            return any;
+        }
 
         function startEditRow(row, isnew) {
             var markerCell = row.children().last();
 
+            // Dynamically generate input elements
+            var monthValue = row.find(".table-month").text();
+            var yearValue = row.find(".table-year").text();
             var amountValue = row.find(".table-amount").text();
             var consumptionValue = row.find(".table-consumption").text();
-            row.find(".table-amount").html($("<input type='number' min='0'>").val(amountValue));
-            row.find(".table-consumption").html($("<input type='number' min='0'>").val(consumptionValue));
+
+            var monthSelector = $("#month-selector-template").clone().show();
+            monthSelector.find("option[value='" + monthValue + "']").prop('selected', true);
+            row.find(".table-month").append(monthSelector);
+            var yearSelector = $("#year-selector-template").clone().show();
+            yearSelector.find("option[value='" + yearValue + "']").prop('selected', true);
+            row.find(".table-year").append(yearSelector);
+            row.find(".table-amount").append($("<input type='number' min='0'>").val(amountValue));
+            row.find(".table-consumption").append($("<input type='number' min='0'>").val(consumptionValue));
+
+            // Hide display elements
+            row.find(".table-month > span").hide();
+            row.find(".table-year > span").hide();
+            row.find(".table-amount > span").hide();
+            row.find(".table-consumption > span").hide();
+
+            // Set cell edition marker
             markerCell.text(!isnew ? "EDITING" : "EDITING_NEW");
+
+            // Update icons
             if (!isnew) {
                 updateRowIconsHover(row);
             }
         }
 
         function endEditRow(row, confirm) {
-            // TODO handle confirm parameter
+            didChanges = true;
             var markerCell = row.children().last();
 
             if (markerCell.text() == "EDITING_NEW" && !confirm) {
@@ -35,26 +66,44 @@
                 return;
             }
 
-
-            if (!confirm) {
-                row.find(".table-amount").text("12345"); // TODO
-                row.find(".table-consumption").text("12345"); // TODO
-            } else {
+            if (confirm) {
+                // Move values from the inputs to the hidden spans
+                var monthValue = row.find(".table-month > select > option:selected").text();
+                var yearValue = row.find(".table-year > select > option:selected").text();
                 var amountValue = row.find(".table-amount > input").val();
                 var consumptionValue = row.find(".table-consumption > input").val();
-                if (!amountValue || !consumptionValue)
+                if (!monthValue || !yearValue)
+                {
+                    row.find(".table-month > select").addClass( "ui-state-error" );
+                    row.find(".table-year > select").addClass( "ui-state-error" );
+                    return;
+                }
+                if (!amountValue || !consumptionValue || amountValue == 0 || consumptionValue == 0)
                 {
                     row.find(".table-amount > input").addClass( "ui-state-error" );
                     row.find(".table-consumption > input").addClass( "ui-state-error" );
                     return;
                 }
-                row.find(".table-amount").text(amountValue);
-                row.find(".table-consumption").text(consumptionValue);
+                row.find(".table-month > span").text(monthValue);
+                row.find(".table-year > span").text(yearValue);
+                row.find(".table-amount > span").text(amountValue);
+                row.find(".table-consumption > span").text(consumptionValue);
             }
+
+            row.find(".table-month > select").remove();
+            row.find(".table-year > select").remove();
+            row.find(".table-amount > input").remove();
+            row.find(".table-consumption > input").remove();
+
+            row.find(".table-month > span").show();
+            row.find(".table-year > span").show();
+            row.find(".table-amount > span").show();
+            row.find(".table-consumption > span").show();
 
             markerCell.text("NOT_EDITING");
             updateRowIconsHover(row);
         }
+
         function updateRowIconsHover(row) {
             var actionsCell = row.children().first();
             actionsCell.empty();
@@ -63,54 +112,16 @@
             var isEditing = markerCell.text() == "EDITING" || markerCell.text() == "EDITING_NEW";
 
             if (row.index() == 1) {
-                var addIcon = $("<img>").attr("src", "images/add_icon.png").attr("alt", "Add").addClass("hover_icon");
-                addIcon.click(function() {
-                    var newRow = $('<tr><td></td><td>April 2016</td><td><span class="table-amount">0</span> &euro;</td><td><span class="table-consumption">0</span> kWh</td><td style="display:none">NOT_EDITING</th></tr>');
-                    row.after(newRow);
-                    setHoverEventHandler(newRow);
-                    startEditRow(newRow, true);
-                });
-                actionsCell.append(addIcon);
+                actionsCell.append($("<img>").attr("src", "images/add_icon.png").attr("alt", "Add").addClass("add_icon"));
             } else if (row.index() != 0) {
                 if (!isEditing) {
-                    var editIcon = $("<img>").attr("src", "images/edit_icon.png").attr("alt", "Edit").addClass("hover_icon");
-                    var removeIcon = $("<img>").attr("src", "images/delete_icon.png").attr("alt", "Delete").addClass("hover_icon");
-                    editIcon.click(function() {
-                        startEditRow(row, false);
-                    });
-                    removeIcon.click(function() {
-                        row.remove();
-                    });
-                    actionsCell.append(editIcon);
-                    actionsCell.append(removeIcon);
+                    actionsCell.append($("<img>").attr("src", "images/edit_icon.png").attr("alt", "Edit").addClass("edit_icon"));
+                    actionsCell.append($("<img>").attr("src", "images/delete_icon.png").attr("alt", "Delete").addClass("delete_icon"));
                 } else {
-                    var tickIcon = $("<img>").attr("src", "images/tick_icon.png").attr("alt", "Confirm").addClass("hover_icon");
-                    var crossIcon = $("<img>").attr("src", "images/cross_icon.png").attr("alt", "Cancel").addClass("hover_icon");
-                    tickIcon.click(function() {
-                        endEditRow(row, true);
-                    });
-                    crossIcon.click(function() {
-                        endEditRow(row, false);
-                    });
-                    actionsCell.append(tickIcon);
-                    actionsCell.append(crossIcon);
+                    actionsCell.append($("<img>").attr("src", "images/tick_icon.png").attr("alt", "Confirm").addClass("tick_icon"));
+                    actionsCell.append($("<img>").attr("src", "images/cross_icon.png").attr("alt", "Cancel").addClass("cross_icon"));
                 }
             }
-        }
-
-        function setHoverEventHandler(elms) {
-            elms.hover(function(event) {
-                var row = $(event.target).closest('tr');
-
-                updateRowIconsHover(row);
-            }, function(event) {
-                var row = $(event.target).closest('tr');
-
-                if (row.index() != 0) {
-                    var actionsCell = row.children().first();
-                    actionsCell.empty();
-                }
-            });
         }
 
         $(function() {
@@ -120,26 +131,80 @@
 
             // Handle save button
             $( "#save-button" ).button().click(function( event ) {
+                pressedSave = true;
                 window.location = "principal.html?invoices-saved"; // Pass invoices saved notification as URL param
                 event.preventDefault();
             });
 
             // Handle go back button
             $( "#go-back-button" ).button().click(function( event ) {
-                pressedGoBack = true;
                 window.location = "principal.html";
                 event.preventDefault();
             });
 
             $(window).bind('beforeunload', function(){
-                if (pressedGoBack) // prompt confirmation
+                if (inEditModeForAny() || (didChanges && !pressedSave)) // prompt confirmation
                 {
-                    pressedGoBack = false;
+                    pressedSave = false;
                     return 'Are you sure you want to leave?';
                 }
             });
 
-            setHoverEventHandler($("#invoice-table tr"));
+            // Table events
+            $(document.body).on('mouseenter', "#invoice-table tr", function(event) {
+                var row = $(event.target).closest('tr');
+                updateRowIconsHover(row);
+            }).on('mouseleave', "#invoice-table tr", function(event) {
+                var row = $(event.target).closest('tr');
+
+                if (row.index() != 0) {
+                    var actionsCell = row.children().first();
+                    actionsCell.empty();
+                }
+            });
+
+            $(document.body).on("click", ".edit_icon", function(event) {
+                startEditRow($(event.target).closest('tr'), false);
+            });
+            $(document.body).on("click", ".delete_icon", function(event) {
+                $(event.target).closest('tr').remove();
+            });
+
+            $(document.body).on("click", ".tick_icon", function(event) {
+                endEditRow($(event.target).closest('tr'), true);
+            });
+            $(document.body).on("click", ".cross_icon", function(event) {
+                endEditRow($(event.target).closest('tr'), false);
+            });
+
+            $(document.body).on("click", ".add_icon", function(event) {
+                var newRow = $('<tr><td></td><td><span class="table-month"><span>April</span></span> <span class="table-year"><span>2016</span></span></td></span></td><td><span class="table-amount"><span>0</span></span> &euro;</td><td><span class="table-consumption"><span>0</span></span> kWh</td><td style="display:none">NOT_EDITING</th></tr>');
+                $(event.target).closest('tr').after(newRow);
+                startEditRow(newRow, true);
+            });
+
+            // Auto calculate other field values
+            $(document.body).on("change keydown paste input", ".table-amount > input", function(event) {
+                var target = $(event.target);
+                var other = target.closest('tr').find(".table-consumption > input");
+                target.addClass("is_changed");
+                if (!other.hasClass("is_changed"))
+                    other.val(target.val() / 0.16);
+            });
+            $(document.body).on("change keydown paste input", ".table-consumption > input", function(event) {
+                var target = $(event.target);
+                var other = target.closest('tr').find(".table-amount > input");
+                target.addClass("is_changed");
+                if (!other.hasClass("is_changed"))
+                    other.val(target.val() * 0.16);
+            });
+
+            // Help tooltip
+            $( "#help-tooltip" ).tooltip({
+                content: "Move your mouse over the table to edit the information of the invoices",
+                items: 'span'
+            }).off( "mouseover" );
+            $( "#help-tooltip" ).tooltip("open");
         });
         </script>
         <style>
@@ -161,9 +226,16 @@
             height: 40px;
         }
 
-        .hover_icon
+        .add_icon, .edit_icon, .delete_icon, .tick_icon, .cross_icon
         {
             height: 32px; padding: 0px; cursor: pointer;
+        }
+
+        .ui-tooltip {
+            background-color: #ffc0c0;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
         }
         </style>
     </head>
@@ -183,6 +255,36 @@
 
                 <p>Keeping your invoice information up to date is essential to provide you with accurate energy consumption information and better ways to save money.</p>
 
+                <select id="month-selector-template" style="display: none;">
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+
+                <select id="year-selector-template" style="display: none;">
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                    <option value="2011">2011</option>
+                    <option value="2010">2010</option>
+                    <option value="2009">2009</option>
+                    <option value="2008">2008</option>
+                    <option value="2007">2007</option>
+                    <option value="2006">2006</option>
+                    <option value="2005">2005</option>
+                </select>
+
                 <table id="invoice-table">
                     <tr>
                         <th width="5%"></th>
@@ -192,7 +294,7 @@
                         <th width="20%" style="display:none">EDITMARKER</th>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td><span id='help-tooltip' title='This is a tooltip that appears on click...'></span></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -200,51 +302,51 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td>February 2016</td>
-                        <td><span class="table-amount">100</span> &euro;</td>
-                        <td><span class="table-consumption">450</span> kWh</td>
+                        <td><span class="table-month"><span>February</span></span> <span class="table-year"><span>2016</span></span></td>
+                        <td><span class="table-amount"><span>100</span></span> &euro;</td>
+                        <td><span class="table-consumption"><span>450</span></span> kWh</td>
                         <td style="display:none">NOT_EDITING</th>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>December 2015</td>
-                        <td><span class="table-amount">120</span> &euro;</td>
-                        <td><span class="table-consumption">550</span> kWh</td>
+                        <td><span class="table-month"><span>December</span></span> <span class="table-year"><span>2015</span></span></td>
+                        <td><span class="table-amount"><span>120</span></span> &euro;</td>
+                        <td><span class="table-consumption"><span>550</span></span> kWh</td>
                         <td style="display:none">NOT_EDITING</th>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>October 2015</td>
-                        <td><span class="table-amount">120</span> &euro;</td>
-                        <td><span class="table-consumption">550</span> kWh</td>
+                        <td><span class="table-month"><span>October</span></span> <span class="table-year"><span>2015</span></span></td>
+                        <td><span class="table-amount"><span>120</span></span> &euro;</td>
+                        <td><span class="table-consumption"><span>550</span></span> kWh</td>
                         <td style="display:none">NOT_EDITING</th>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>August 2015</td>
-                        <td><span class="table-amount">140</span> &euro;</td>
-                        <td><span class="table-consumption">650</span> kWh</td>
+                        <td><span class="table-month"><span>August</span></span> <span class="table-year"><span>2015</span></span></td>
+                        <td><span class="table-amount"><span>140</span></span> &euro;</td>
+                        <td><span class="table-consumption"><span>650</span></span> kWh</td>
                         <td style="display:none">NOT_EDITING</th>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>June 2015</td>
-                        <td><span class="table-amount">120</span> &euro;</td>
-                        <td><span class="table-consumption">550</span> kWh</td>
+                        <td><span class="table-month"><span>June</span></span> <span class="table-year"><span>2015</span></span></td>
+                        <td><span class="table-amount"><span>120</span></span> &euro;</td>
+                        <td><span class="table-consumption"><span>550</span></span> kWh</td>
                         <td style="display:none">NOT_EDITING</th>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>April 2015</td>
-                        <td><span class="table-amount">100</span> &euro;</td>
-                        <td><span class="table-consumption">450</span> kWh</td>
+                        <td><span class="table-month"><span>April</span></span> <span class="table-year"><span>2015</span></span></td>
+                        <td><span class="table-amount"><span>100</span></span> &euro;</td>
+                        <td><span class="table-consumption"><span>450</span></span> kWh</td>
                         <td style="display:none">NOT_EDITING</th>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>December 2014</td>
-                        <td><span class="table-amount">120</span> &euro;</td>
-                        <td><span class="table-consumption">550</span> kWh</td>
+                        <td><span class="table-month"><span>December</span></span> <span class="table-year"><span>2014</span></span></td>
+                        <td><span class="table-amount"><span>120</span></span> &euro;</td>
+                        <td><span class="table-consumption"><span>550</span></span> kWh</td>
                         <td style="display:none">NOT_EDITING</th>
                     </tr>
                 </table>
