@@ -9,6 +9,7 @@
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
         <script src="js/libs/jquery-2.2.3.min.js"></script>
         <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script src="js/libs/jquery-noty-2.3.8.min.js"></script>
         <script src="js/tabs-custom.js"></script>
         <script>
         $(function() {
@@ -36,6 +37,12 @@
                 modal: true,
                 buttons: {
                     "Save": function() {
+                        if (!$("#dialog-invoice-amount").val() || $("#dialog-invoice-consumption").val()) {
+                            $("#dialog-invoice-amount").addClass( "ui-state-error" );
+                            $("#dialog-invoice-consumption").addClass( "ui-state-error" );
+                            return;
+                        }
+                        noty({text: 'Your last invoice has been updated in your profile.', type: 'success'});
                         $("#notification-rem-1").fadeOut(300, function() { $(this).remove(); });
                         dialog.dialog( "close" );
                     },
@@ -46,6 +53,8 @@
                 close: function() {
                     $("#dialog-invoice-amount").removeClass("is_changed");
                     $("#dialog-invoice-consumption").removeClass("is_changed");
+                    $("#dialog-invoice-amount").removeClass( "ui-state-error" );
+                    $("#dialog-invoice-consumption").removeClass( "ui-state-error" );
                 }
             });
 
@@ -129,9 +138,8 @@
 
         div.ui-tooltip {
             max-width: 400px;
-        }
-  
-  </style>
+        }  
+        </style>
     </head>
     <body>
         <div id="tabs">
