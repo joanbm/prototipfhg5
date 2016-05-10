@@ -41,7 +41,8 @@
                 modal: true,
                 buttons: {
                     "Save": function() {
-                        if (!$("#dialog-invoice-amount").val() || !$("#dialog-invoice-consumption").val()) {
+                        if (!$("#dialog-invoice-amount").val() || !$("#dialog-invoice-consumption").val() ||
+                             $("#dialog-invoice-amount").val() <= 0 || $("#dialog-invoice-consumption").val() <= 0) {
                             $("#dialog-invoice-amount").addClass( "ui-state-error" );
                             $("#dialog-invoice-consumption").addClass( "ui-state-error" );
                             return;
@@ -89,7 +90,7 @@
             // Invoices saved success notification
             if (url('?invoices-saved') !== undefined) {
                 noty({text: 'Invoice information saved.', type: 'success', timeout:3000 });
-            }            
+            }
         });
         </script>
         <style>
@@ -119,7 +120,7 @@
         .right-div {
             width: 85%;
             /* border:1px solid red; */
-            display: inline-block;  
+            display: inline-block;
             font-size: initial;
 
             /* IE 7 hack */
@@ -145,7 +146,7 @@
 
         div.ui-tooltip {
             max-width: 400px;
-        }  
+        }
         </style>
     </head>
     <body>
@@ -170,7 +171,7 @@
                     <div class="wrapper" id="notification-rem-1">
                         <div class="left-div">
                             <img src="images/bell_icon.png" alt="Bell" style="height: 25px;" />
-                        </div>  
+                        </div>
                         <div class="right-div">
                             You haven't introduced your invoice for the last month. <a href="" id='add-invoice-link'>Add it now</a>.
                         </div>
@@ -178,7 +179,7 @@
                     <div class="wrapper" id="notification-rem-2">
                         <div class="left-div">
                             <img src="images/bell_icon.png" alt="Bell" style="height: 25px;" />
-                        </div>  
+                        </div>
                         <div class="right-div">
                             You haven't updated your appliances for 3 months. <a href="actualizarperfil.html">Update it now</a> or <a href="#" id="notification-rem-2-link">there hasn't been any change recently</a>.
                         </div>
@@ -187,7 +188,7 @@
                     <div class="wrapper">
                         <div class="left-div">
                             <img src="images/tree_icon.png" alt="Tree" style="height: 25px;" />
-                        </div>  
+                        </div>
                         <div class="right-div">
                             Your energy consumption increased 23% in the last three months. <a href="consultarconsumo.html">Check it now</a>.
                         </div>
@@ -195,7 +196,7 @@
                     <div class="wrapper">
                         <div class="left-div">
                             <img src="images/chart_icon.png" alt="Chart" alt="Chart" style="height: 25px; " />
-                        </div>  
+                        </div>
                         <div class="right-div">
                             You reduced your CO<sup>2</sup> emissions in the last year by 200 kilograms. <a href="consultarhuella.html">Check your ecological footprint</a>.
                         </div>

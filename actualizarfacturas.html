@@ -79,7 +79,7 @@
                     row.find(".table-year > select").addClass( "ui-state-error" );
                     return;
                 }
-                if (!amountValue || !consumptionValue || amountValue == 0 || consumptionValue == 0)
+                if (!amountValue || !consumptionValue || amountValue <= 0 || consumptionValue <= 0)
                 {
                     row.find(".table-amount > input").addClass( "ui-state-error" );
                     row.find(".table-consumption > input").addClass( "ui-state-error" );
@@ -238,7 +238,7 @@
         });
         </script>
         <style>
-        table, td, th {    
+        table, td, th {
             border: 1px solid #ddd;
             text-align: left;
         }
