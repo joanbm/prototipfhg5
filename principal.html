@@ -30,7 +30,8 @@
                 content: function() {
                     var element = $( this );
                     return "<h1>"+element.attr( "data-hover-title" )+"</h1><p>" + element.attr( "data-hover-detail" ) + "</p>";
-                }
+                },
+                position: { my: "center top+30", at: "center top+100%" }
             });
 
             // Add invoice links
@@ -93,7 +94,7 @@
             }
         });
         </script>
-        <style>
+        <style>        
         /* http://stackoverflow.com/a/9431102 */
         .wrapper {
             width:100%;
@@ -137,6 +138,7 @@
             border: 1px solid black;
             border-radius: 25px;
             text-decoration: none;
+            background-color: #f8f8ff;
         }
 
         .boton-grande > h2
@@ -160,7 +162,7 @@
                 <li><a href="actualizarfacturas.html">Add My Invoices</a></li>
             </ul>
             <div id="tab-current" style="overflow:hidden; position: relative; padding: 0px; display: flex;">
-                <div style="width: 25%; float:left; background-color: #f8f8f8; padding: 10px; border: 1px solid #d0d0d0; border-top: 0px; align-items: stretch;">
+                <div style="width: 25%; float:left; background-color: #f8f8f8; padding: 10px; border: 1px solid #d0d0d0; border-top: 0px;">
                     <h1>My Overview</h1>
                     <img src="images/placeholder_human.png" width="50%;" />
                     <p>Welcome, <b>John Smith</b></p>
