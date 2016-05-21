@@ -3,6 +3,7 @@
 {
     display: inline-block;
     float: none;
+    vertical-align: bottom;
 }
 
 #tabs > ul .ui-state-active 
