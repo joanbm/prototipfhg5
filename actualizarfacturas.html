@@ -225,7 +225,7 @@
                 height: dlgHeight,
                 width: dlgWidth,
                 modal: false,
-                position: { my: 'left+'+($("#invoice-table").position().left+$("#invoice-table").width()-dlgWidth)+' top+'+($("#invoice-table").position().top-dlgHeight), at: 'left top' },
+                position: { my: 'right top-100%', at: 'right top-10', of: $("#invoice-table") },
                 show: 'fade',
                 hide: 'fade',
                 buttons: {
@@ -235,6 +235,10 @@
                 }
             });
             helpDialog.dialog("open");
+        });
+        
+        $(window).resize(function() {
+            $("#help-dialog").dialog("option", "position", { my: 'right top-100%', at: 'right top-10', of: $("#invoice-table") });
         });
         </script>
         <style>
