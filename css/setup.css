@@ -37,6 +37,34 @@ body {
     width: 170px;
 }
 
+.help .back {
+    position: absolute;
+    display: block;
+    bottom: 3em;
+    color: #87909c;
+    font-size:  16px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    margin-left: 40px;
+}
+
+.help .back svg {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    transition: all 250ms cubic-bezier(.68,-.55,.265,1.55);
+}
+
+.help .back:hover svg {
+    transform: translateX(-10px);
+}
+
+.help .back span {
+    margin-left: 10px;
+    /*padding-top: 2px;*/
+}
+
 .form {
     padding: 30px;
     border-radius: 0;
