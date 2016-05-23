@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+      <meta charset="UTF-8">
         <title>SaveMate - My Energy Usage</title>
         <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.min.css">
         <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
@@ -10,16 +10,405 @@
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
         <script src="js/libs/jquery-2.2.3.min.js"></script>
         <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script src="js/libs/Chart.bundle.js"></script>
         <script>
         $(function() {
             // Tabs
             $( "#tabs" ).tabs({ active: 1 });
             $("#tabs>ul>li>a").unbind("click");
         });
-        </script>
+        $(function() {
+            $('#subMenu')
+           .tabs()
+            .addClass('ui-tabs-vertical ui-helper-clearfix');
+        });
+        $(function () {
+        $(".dialogg").dialog({
+            autoOpen: false,
+            modal: true,
+            maxWidth:750,
+            maxHeight: 600,
+            width: 750,
+            height: 600
+        });
+         $(function() {
+             $( document ).tooltip();
+         });
+        $("#watchP")
+        .button()
+        .click(function () {
+        $("#planD").dialog("open");
+        });
+        });
+        //metodo para calcular los valores de la tabla segun el periodo seleccionado
+        function onChangeF() {
+             var values = [[1,1],[1,1],[1,1],[1,1],[4,4]];
+             var y;
+             var x = document.getElementById("time").value;
+             if (x == "daily") {
+                y =1;
+             }
+             if ( x == "weekly"){
+                y = 7;
+             }
+             if (x == "monthly"){
+                y = 30;
+             }
+             if (x =="yearly") {
+                y = 360;
+
+             }
+             
+             var r = document.getElementById("tabla").rows.length;
+        
+             for (i = 1; i<r; i++){
+                for(j = 1; j<document.getElementById("tabla").rows[i].cells.length; j++){
+                    document.getElementById("tabla").rows[i].cells[j].innerText = values[i-1][j -1]* y;
+                }
+             } 
+            
+        }
+      function onChangeF2(){
+            var val = document.getElementById("whatC").value;
+            var y;
+            var dataset1;
+            var dataset2;
+            if (val == "LC"){
+                y = "Light consumption (Wh)";
+                dataset1 = [4];
+                dataset2 = [8];
+            }
+            if(val == "HC"){
+                y = "Heating consumption (Wh)";
+                dataset1 = [10];
+                dataset2 =[20];
+            }
+            if(val == "MxB"){
+                y = "Max bill ($)";
+                dataset1=[145];
+                dataset2 =[160];
+            }
+            if(val == "MnB"){
+                y = "Min bill ($)"
+                dataset1 = [121];
+                dataset2 = [112];
+            }
+            document.getElementById("test").innerText = y;
+            $.each(barChartDataC.datasets, function(i, dataset) {
+                if(dataset.label == "You"){
+                  dataset.data =  dataset1;
+                }
+                if(dataset.label == "Average user"){
+                  dataset.data =  dataset2;
+                }
+                
+            });
+            window.myBar.update();
+        }; 
+        // grafico Billing
+            var barChartData = {
+            labels: ["01/09/2014", "01/12/2014", "01/03/2015", "01/06/2015", "01/09/2015", "01/12/2015", "01/03/2016"],
+            datasets: [{
+                label: 'Amount',
+                backgroundColor: "rgba(0,0,255,0.5)",
+                data: [110, 115, 111, 125, 130,140, 145],
+            }, {
+                type: 'line',
+                label: 'Mean',
+                backgroundColor: "rgba(255,0,0,0.5)",
+                data: [125.42, 125.42, 125.42, 125.42, 125.42, 125.42, 125.42],
+                fill: false,
+                borderDash: [5, 5],
+                 borderColor: 'red',
+                borderWidth: 2
+            }]
+        };
+        //grafico Comparative
+        var barChartDataC = {
+            labels: ["    "],
+            datasets: [{
+                label: 'You',
+                backgroundColor: "rgba(0,0,255,0.5)",
+                data: [4],
+            }, {
+                label: 'Average user',
+                backgroundColor: "rgba(255,0,0,0.5)",
+                data: [8],
+          }]
+        };
+        //grafico Pv
+        var barChartDatapv = {
+            labels: ["00:00","01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],
+            datasets: [{
+                label: 'Amount',
+                backgroundColor: "rgba(0,0,255,0.5)",
+                data: [0.075, 0.07, 0.063, 0.053, 0.05, 0.056, 0.062, 0.067, 0.07, 0.077, 0.076,0.079, 0.082, 0.158, 0.152,0.155,0.15,0.144,0.143,0.146,0.15,0.155,0.169,0.16],
+            }, {
+                type: 'line',
+                label: 'best price',
+                backgroundColor: "rgba(255,0,0,0.5)",
+                data: [0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05],
+                fill: false,
+                borderDash: [5, 5],
+                 borderColor: 'red',
+                borderWidth: 2
+            }]
+          };
+        var chartC;
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            var ctxpv = document.getElementById("canvaspv").getContext("2d");
+            var ctxC= document.getElementById("canvasC").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    // Elements options apply to all of the options unless overridden in a dataset
+                    // In this case, we are setting the border of each bar to be 2px wide and green
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2,
+                            borderColor: 'rgb(0, 255, 0)',
+                            borderSkipped: 'bottom'
+                        }
+                    },
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                     scales: {
+                        xAxes: [{
+                            stacked: true,
+                            scaleLabel: {
+                              display: true,
+                              fontSize:20,
+                               labelString: 'Date'
+                           }                   
+
+                        }],
+                        yAxes: [{
+                            stacked: true,
+                             scaleLabel: {
+                              display: true,
+                              fontSize:20,
+                               labelString: '$'
+                           }  
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Billing',
+                        fontSize: 25
+                    }
+
+                }
+            });
+            window.myBar  = new Chart(ctxpv, {
+                type: 'bar',
+                data: barChartDatapv,
+                options: {
+
+                    // Elements options apply to all of the options unless overridden in a dataset
+                    // In this case, we are setting the border of each bar to be 2px wide and green
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2,
+                            borderColor: 'rgb(0, 255, 0)',
+                            borderSkipped: 'bottom'
+                        }
+                    },
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                     scales: {
+                        xAxes: [{
+                            stacked: true,
+                             scaleLabel: {
+                              display: true,
+                              fontSize:20,
+                               labelString: 'Hours'
+                           }  
+                        }],
+                        yAxes: [{
+                            stacked: true,
+                             scaleLabel: {
+                              display: true,
+                               labelString: 'Wh/$',
+                               fontSize:20
+                           }  
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Price evolution',
+                        fontSize:25
+                    }
+
+                }
+            });
+             chartC = new Chart(ctxC, {
+                type: 'bar',
+                data: barChartDataC,
+                options: {
+
+                    // Elements options apply to all of the options unless overridden in a dataset
+                    // In this case, we are setting the border of each bar to be 2px wide and green
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2,
+                            borderColor: 'rgb(0, 255, 0)',
+                            borderSkipped: 'bottom'
+                        }
+                    },
+                    stacked: false,
+                    responsive: false,
+                    legend: {
+                        position: 'top',
+                    },
+                     scales: {
+                        xAxes: [{
+                            stacked: false,
+                             scaleLabel: {
+                              display: true,
+                              
+                           }  
+                        }],
+                        yAxes: [{
+                            stacked: false,
+                            ticks: {
+                                  suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                                  beginAtZero: true   // minimum value will be 0.
+                                },
+                             scaleLabel: {
+                              display: true
+                                
+                           }  
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Comparison',
+                        fontSize: 15
+                    }
+
+                }
+            });
+            window.myBar = chartC;
+        };
+       
+      </script>
+      <style>
+        .ui-tabs.ui-tabs-vertical {
+          padding: 0;
+          width: 42em;
+           }
+        .ui-tabs.ui-tabs-vertical .ui-widget-header {
+            border: none;
+        }
+        .ui-tabs.ui-tabs-vertical .ui-tabs-nav {
+            float: left;
+            width: 17%;
+            background: #CCC;
+            border-radius: 4px 0 0 4px;
+            border-right: 1px solid gray;
+            height: 99%;
+        }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
+           clear: left;
+           width: 100%;
+           margin: 0.2em 0;
+           border: 1px solid gray;
+           border-width: 1px 0 1px 1px;
+           border-radius: 4px 0 0 4px;
+           overflow: hidden;
+           position: relative;
+          right: -2px;
+          z-index: 2;
+      }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
+          display: block;
+          width: 100%;
+          padding: 0.6em 1em;
+      }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
+           cursor: pointer;
+      }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+           margin-bottom: 0.2em;
+           padding-bottom: 0;
+            border-right: 1px solid white;
+      }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li:last-child {
+          margin-bottom: 10px;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-panel {
+    float: left;
+    width: 17%;
+    border-left: 1px solid gray;
+    border-radius: 0;
+    position: relative;
+    left: -1px;
+}
+#subMenu{
+    position: absolute;
+    height: 95%;
+    width: 92%;
+}
+/* billing */
+      #tabla {
+            position: absolute;
+            left: 20%;
+            top: 20%;
+            height:60%;
+            width: 70%; 
+        }
+        #watchP {
+            position: absolute;
+            left: 50%;
+            top: 10%;
+            height:10%;
+            width: 20%; 
+            font-size: 0.9em;
+        }
+        #time {
+            position: absolute;
+            left: 70%;
+            top: 10%;
+            height:10%;
+            width: 20%; 
+        }
+        #Reliability{
+            position: absolute;
+            left: 20%;
+            top: 10%;
+            font-size: 0.9em;
+        }
+        /* general */
+        html {
+            height:100%;
+        }
+        body {
+            height:100%;
+        }
+        th {
+            text-align: center;
+        }   
+        td{
+            text-align: center;
+        }
+        table, th, td {
+          border: 1px solid black;
+        }
+         canvas{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+       }
+      </style>
     </head>
     <body>
-        <div id="tabs">
+        <div id="tabs" style = "height:99%;">
             <ul>
                 <li><a href="principal.html"><span class="tabs-title"><img src="images/logo.png" alt="SaveMate" />SaveMate</span></a></li>
                 <li><a href="#tab-current">My Energy Usage</a></li>
@@ -27,8 +416,113 @@
                 <li><a href="actualizarperfil.html">Update My Profile</a></li>
                 <li><a href="actualizarfacturas.html">Add My Invoices</a></li>
             </ul>
-            <div id="tab-current">
-                Por hacer.
+            <div id="tab-current" style="overflow:hidden; position: relative;height:80%;" >
+                <div id ="subMenu"  >
+                 <ul>
+                    <li> <a href="#Consumption">Consumption</a> </li>
+                     <li> <a href="#Billing">Billing</a> </li>
+                     <li> <a href="#Pv">Price evolution</a> </li>
+                    <li> <a href="#Comparative">Comparative</a> </li>
+                </ul>
+                <div id="Consumption" style ="height:80%; width:70%">
+                      <table id = "tabla">
+                        <tr>
+                           <th>Type</th>
+                           <th>Consumption (Wh)</th>
+                           <th>Consumption ($)</th>
+                        </tr>
+                        <tr>
+                            <td>Kitchen</td>
+                            <td> 1</td>
+                            <td> 1 </td>
+                        </tr>
+                        <tr>
+                            <td>Lighting</td>
+                            <td> 1</td>
+                            <td> 1</td>
+                        </tr>
+                         <tr>
+                            <td>Heating</td>
+                             <td> 1</td>
+                             <td> 1</td>
+                        </tr>
+                        <tr>
+                           <td>Others</td>
+                           <td> 1</td>
+                            <td> 1</td>
+                       </tr>
+                        <tr>
+                            <td>TOTAL COST</td>
+                            <td> 4</td>
+                             <td> 4</td>
+                      </tr>
+                    </table>
+                   <input id = "watchP" type="button" value="Home consumption"  />
+                   <select name="time" id= "time" onchange="onChangeF()">
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                  </select>
+                 <p id = "Reliability"> Reliability 90 % <p>
+              </div>
+              <div id="Billing" style ="height:80%; width:70%;">
+                <div style = "height:80%; width: 90%;">
+                  <canvas id="canvas"></canvas>
+                </div>
+                <br><br><br><br>
+                <div style = "height: 19%; width: 90%; text-align: center;">
+                  <p> Savings from the start : -35 $  -27.27 % <br>
+                  </div> 
+              </div>
+              <div id = "Pv" style= "width:70%; height:92%;" >
+                <div style = "height: 90%; width: 99%;"> 
+                  <canvas id="canvaspv"></canvas>
+              </div>
+
+              <div style = "position:absolute; bottom:4%;height: 10%; width: 99%;">
+                  <br>
+                  <div style = "width: 50%;background: rgba(255,0,0,0.3); float: left;height: 80%;text-align: center;" > 
+                    <p> next worst price: 0.169 $ / wh at 22:00 h </p>
+                  </div>
+                  <div style = "width: 50%;background: rgba(0,255,0,0.3); float: right; height: 80%; text-align: center;">
+                      <p > next best price: 0.076 $ / wh at 10:00 h </p>
+                  </div>
+              </div>
+              </div>
+                <div id="Comparative" style ="height:80%; width:75%;">
+                      <div style = "float: right; height:100%; width: 40%;">
+                      <input id = "advOptionC" type="button" value="Comparative advanced options" />
+                      <p> in comparing: <p>
+                      <select name="inComparing" id= "whatC" onchange="onChangeF2()">
+                        <option value="LC">Lighting consumption</option>
+                        <option value="HC">Heating consumption</option>
+                        <option value="MxB">Max bill</option>
+                        <option value="MnB">Min bill</option>
+                      </select>
+                      <br>
+                      <p> Some comparisons: </p>
+                      <br>
+                      <div style = "overflow: scroll; height: 70%; width: 99%; border: 2px solid black; ">
+                    <ul>
+                     <li><div style = "width: 70%;float:left;text-align: left;" >You spend 70 $ (3500 Wh) less than the average user with a similar profile</div><div style = "width: 19%; float:right; "> <img src="images/GREEN.png" title = "score:high" alt="GREEN" style="height: 25px;" /></div><br><br><br><br></li>
+                      <li><div style = "width: 70%;float:left; text-align: left; " >The maximum power is estimated 2 kw below the power of contract</div><div style = "width: 19%; float:right; "> <img src="images/RED.png" title = "score: low"  alt="RED" style="height: 25px;" /></div><br><br><br><br></li>
+                     <li><div style = "width: 70%;float:left;text-align: left; " >the amount of your average bill is 2$ more than the similar user amount</div><div style = "width: 19%; float:right; "> <img src="images/YELLOW.png" title = "score:medium" alt="YELLOW" style="height: 25px;" /></div><br><br><br><br></li>
+                 </ul>  
+                </div>
+                    </div>
+                      <div style = "float:left; height:99%; width: 40%;">
+                        <div style ="width:99%;">
+                         <canvas height= "350" id="canvasC"></canvas>
+                        </div>
+                        <p id = "test">Lighting consumption (Wh)</p>
+                      </div>
+                  </div> 
+                   <br> <br>                                              
+                  
             </div>
+          </div>
+          </div>
+          <div class ="dialogg" id="planD" title="Floor plan"> <img style = "height: 80%; width:100%;" src="images/floorPlan.png" alt="floorPlan" /> </div>
     </body>
 </html>
