@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Your Company - SaveMate</title>
+    <link rel="stylesheet" href="./js/libs/jquery-ui-1.11.4/jquery-ui.min.css">
+    <link rel="stylesheet" href="./js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/setup.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <script src="js/libs/jquery-2.2.3.min.js"></script>
+    <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+    <script>
+        $(function() {
+            // Tabs
+            $( "#tabs" ).tabs({ active: 0 });
+            $("#tabs>ul>li>a").unbind("click");
+        });
+    </script>
+</head>
+<body>
+<div class="setup">
+<div class="box">
+    <div class="help">
+        <p>We need to know your company to provide your energy sources.</p>
+    </div>
+    <div class="form">
+        <h1>Your company</h1>
+        <form>
+            <!--http://stackoverflow.com/questions/17541614/use-image-instead-of-radio-button-->
+            <label class="radio">
+                <input type="radio" name="company" value="endesa" />
+                <img src="http://tarifas.net/files/2012/01/Tarifas-Endesa-1.jpg">
+            </label>
+
+            <label class="radio">
+                <input type="radio" name="company" value="iberdrola"/>
+                <img src="https://pbs.twimg.com/profile_images/695500577820831744/RJU8jaQR.png">
+            </label>
+
+            <label class="radio">
+                <input type="radio" name="company" value="eon" />
+                <img src="https://pbs.twimg.com/profile_images/510085081306652672/WRBf_4Ss.png">
+            </label>
+
+            <label class="radio">
+                <input type="radio" name="company" value="acciona" />
+                <img src="http://www.acciona-energia.com/media/1371193/acciona_oglogo.jpg">
+            </label>
+
+            <!--<label class="radio">-->
+                <!--<input type="radio" name="company" value="pepe" />-->
+                <!--<img src="http://cdn1.adslzone.net/app/uploads/2014/05/apertura-pepeenergy-698x500.jpg">-->
+            <!--</label>-->
+        </form>
+        <a class="submit" href="./principal.html">Finish</a>
+    </div>
+</div>
+</div>
+</body>
+</html>
+

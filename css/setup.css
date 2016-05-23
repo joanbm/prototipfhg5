@@ -66,6 +66,29 @@ p, form label {
     color: #87909c;
 }
 
+.radio {
+    display: inline-block;
+}
+
+.radio > input{
+    display:none;
+}
+.radio  > input + img{
+    height: 80px;
+    width: 80px;
+    cursor:pointer;
+    border:2px solid transparent;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    transition: all .4s ease;
+}
+.radio  > input:checked + img{
+    border:2px solid white;
+    filter: grayscale(0);
+    -webkit-filter: grayscale(0);
+}
+
+
 .submit {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;

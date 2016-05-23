@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Your Home - SaveMate</title>
+    <link rel="stylesheet" href="./js/libs/jquery-ui-1.11.4/jquery-ui.min.css">
+    <link rel="stylesheet" href="./js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/setup.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <script src="js/libs/jquery-2.2.3.min.js"></script>
+    <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+    <script>
+        $(function() {
+            // Tabs
+            $( "#tabs" ).tabs({ active: 0 });
+            $("#tabs>ul>li>a").unbind("click");
+        });
+    </script>
+</head>
+<body>
+<div class="setup">
+<div class="box">
+    <div class="help">
+        <p>We need this information to refine of consumption data.</p>
+    </div>
+    <div class="form">
+        <h1>Your home</h1>
+        <form>
+            <label for="type">Type</label>
+            <select id="type">
+                <option>House</option>
+                <option>Flat</option>
+                <option>Attic</option>
+            </select>
+            <label for="rooms">Rooms</label>
+            <input id="rooms" type="number" min="0" max="20" />
+            <label for="baths">Baths</label>
+            <input id="baths" type="number" min="0" max="20" />
+            <label for="size">size</label>
+            <input id="size" type="range" min="0" max="500">
+            <input type="number" min="0" max="20" />
+        </form>
+        <a class="submit" href="./setup-3.html">Next</a>
+    </div>
+</div>
+</div>
+</body>
+</html>
+
