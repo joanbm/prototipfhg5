@@ -85,6 +85,13 @@ h1 {
     margin-bottom: 30px;
 }
 
+label {
+    margin-top: 10px;
+}
+label:first-of-type {
+    margin-top: 0;
+}
+
 p, form label {
     display: block;
     font-family: 'Montserrat', sans-serif;
@@ -92,6 +99,16 @@ p, form label {
     font-weight: 700;
     text-transform: uppercase;
     color: #87909c;
+}
+
+label.inline span {
+    width: 80px;
+    font:inherit;
+    display: inline-block;
+}
+
+label.inline input[type="number"] {
+    width: 100px;
 }
 
 .radio {
