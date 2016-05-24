@@ -32,20 +32,22 @@
         <h1>Your home</h1>
         <form>
             <label for="type">Type</label>
-            <label class="radio">
-                <input type="radio" name="type" value="House" />
-                <img src="./images/house.png">
-            </label>
+            <div class="radio-group">
+                <label class="radio">
+                    <input type="radio" name="type" value="House" />
+                    <img src="./images/house.png" title="House" alt="House">
+                </label>
 
-            <label class="radio">
-                <input type="radio" name="type" value="Flat"/>
-                <img src="./images/flat.png">
-            </label>
+                <label class="radio">
+                    <input type="radio" name="type" value="Flat"/>
+                    <img src="./images/flat.png" title="Flat" alt="Flat">
+                </label>
 
-            <label class="radio">
-                <input type="radio" name="type" value="Attic" />
-                <img src="./images/attic.png">
-            </label>
+                <label class="radio">
+                    <input type="radio" name="type" value="Attic" />
+                    <img src="./images/attic.png" title="Attic" alt="Attic">
+                </label>
+            </div>
             <label class="inline" for="rooms">
                 <span>Rooms</span>
                 <input id="rooms" type="number" min="0" max="20" />
