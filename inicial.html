@@ -6,103 +6,41 @@
     <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.min.css">
     <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
     <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/initial.css">
     <link rel="stylesheet" href="css/tabs-custom.css">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <script src="js/libs/jquery-2.2.3.min.js"></script>
     <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
-    <script>
-        $(function() {
-            // Tabs
-            $( "#tabs" ).tabs({ active: 0 });
-            $("#tabs>ul>li>a").unbind("click");
-        });
-        function toPrincipal() {
-
-        }
-    </script>
 </head>
-<style>
-    IMG.displayed {
-        display: block;
-        margin-left: auto;
-        margin-right: auto
-    }
-    .submit {
-        font-size: 30px;
-        font-weight: bold;
-        transition: background-color .2s ease;
-        position: relative;
-        cursor: pointer;
-
-        color: white;
-        width: 100%;
-        margin: 0;
-        margin-top: 10px;
-        line-height: 58px;
-        padding: 0;
-        display: inline-block;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 3px;
-        background-color: #088A08;
-    }
-    .submit:hover {
-        background-color: #0B610B;
-    }
-    input.email{
-        display: inline;
-        margin-left: 10%;
-        margin-right: auto
-    }
-    input.password{
-        display: inline;
-        margin-left: 14%;
-        margin-right: auto
-    }
-    h1{
-        color: #088A08;
-    }
-
-</style>
 <body>
-<div style="background-color: #F2F2F2">
-    <!--
-                <ul>
-                    <li><a href="#tab-current"><span class="tabs-title"><img src="images/logo.png" alt="SaveMate" />SaveMate</span></a></li>
-                    <li><a href="#tab-current">My Energy Usage</a></li>
-                    <li><a href="#tab-current">My Ecological Footprint</a></li>
-                    <li><a href="#tab-current">Update My Profile</a></li>
-                    <li><a href="#tab-current">Add My Invoices</a></li>
-                </ul>
-    -->
-    <div id="tab-current" style="overflow:hidden; position: relative;">
-        <div style="bottom: 85%; ">
-            <IMG class="displayed" src="images/logo_lletra.jpg"/>
+<div>
+    <div style="bottom: 85%; ">
+        <img class="displayed" src="images/logo_lletra.jpg"/>
+    </div>
+    <div class="left-part">
+        <img class="displayed" src="images/intro_image.jpg" width="100%;" />
+    </div>
+    <div class="right-part">
+        <h1> Log in </h1>
+        <div style="left:70%; text-indent: 320px;">
+            <p style="color: #088A08;"> or </p>
         </div>
-        <div style="top: 20%; width: 40%; float:left;">
-            <img class="displayed" src="images/intro_image.jpg" width="100%;" />
+        <div style="text-align: center;text-indent: 150px;">
+            <a href="crearcompte.html" > create an account </a>
         </div>
-        <div style = "top: 20%; width: 55%; float:right; ">
-            <h1> Log in </h1>
-            <div style="left:70%; text-indent: 200px;">
-                <p style="color: #088A08;"> or </p>
-            </div>
-            <div style="text-align: center;text-indent: 200px;">
-                <a href="crearcompte.html" id='create-account-link'  > create an account </a>
-            </div>
-            <br>
-            <form method = "post" enctype="text/plain">
-                Email address:
-                <input class="email" type="text" name="email" size="40"><br><br>
-                Password:
-                <input class="password" type="text" name="password" size="40">
-                <br><br>
-                <input type="checkbox" name="remember" value="remember">Remember me
-                <a class="submit" href="./principal.html">Log in</a>
-            </form>
-        </div>
+        <br>
+        <form method = "post" enctype="text/plain">
+            Email address:
+            <input class="email" type="text" name="email" size="40"><br><br>
+            Password:
+            <input class="password" type="text" name="password" size="40">
+            <br><br>
+            <input type="checkbox" name="remember" value="remember">Remember me
+            <a class="submit" href="./principal.html">Log in</a>
+        </form>
     </div>
 </div>
+
 </body>
 </html>
 
