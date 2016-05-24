@@ -16,10 +16,92 @@
             $( "#tabs" ).tabs({ active: 2 });
             $("#tabs>ul>li>a").unbind("click");         
         });
+        $(function() {
+            $('#subMenu')
+           .tabs()
+            .addClass('ui-tabs-vertical ui-helper-clearfix');
+        });
+        $(function() {
+            $('#subMenu2')
+           .tabs()
+            .addClass('ui-tabs-vertical ui-helper-clearfix');
+        });
+          $(function() {
+             $( document ).tooltip();
+         });
         </script>
+        <style>
+        .ui-tabs.ui-tabs-vertical {
+          padding: 0;
+          width: 42em;
+           }
+        .ui-tabs.ui-tabs-vertical .ui-widget-header {
+            border: none;
+        }
+        .ui-tabs.ui-tabs-vertical .ui-tabs-nav {
+            float: left;
+            width: 17%;
+            background: #CCC;
+            border-radius: 4px 0 0 4px;
+            border-right: 1px solid gray;
+            height: 99%;
+        }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
+           clear: left;
+           width: 100%;
+           margin: 0.2em 0;
+           border: 1px solid gray;
+           border-width: 1px 0 1px 1px;
+           border-radius: 4px 0 0 4px;
+           overflow: hidden;
+           position: relative;
+          right: -2px;
+          z-index: 2;
+      }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
+          display: block;
+          width: 100%;
+          padding: 0.6em 1em;
+      }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
+           cursor: pointer;
+      }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+           margin-bottom: 0.2em;
+           padding-bottom: 0;
+            border-right: 1px solid white;
+      }
+      .ui-tabs.ui-tabs-vertical .ui-tabs-nav li:last-child {
+          margin-bottom: 10px;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-panel {
+    float: left;
+    width: 17%;
+    border-left: 1px solid gray;
+    border-radius: 0;
+    position: relative;
+    left: -1px;
+}
+#subMenu{
+    position: absolute;
+    height: 95%;
+    width: 92%;
+}
+#subMenu2{
+    position: absolute;
+    height: 95%;
+    width: 92%;
+}
+  html {
+            height:100%;
+        }
+body {
+            height:100%;
+        }
+</style>
     </head>
     <body>
-        <div id="tabs">
+        <div id="tabs" style = "height:99%;">
             <ul>
                 <li><a href="principal.html"><span class="tabs-title"><img src="images/logo.png" alt="SaveMate" />SaveMate</span></a></li>
                 <li><a href="consultarconsumo.html">My Energy Usage</a></li>
@@ -27,8 +109,215 @@
                 <li><a href="actualizarperfil.html">Update My Profile</a></li>
                 <li><a href="actualizarfacturas.html">Add My Invoices</a></li>
             </ul>
-            <div id="tab-current">
-                Por hacer.
+            <div id="tab-current" style="overflow:hidden; position: relative;height:80%;">
+                <div id ="subMenu"  >
+                 <ul>
+                    <li> <a href="#Evaluation">Evaluation</a> </li>
+                     <li> <a href="#Tips">Tips</a> </li>
+                </ul>
+                <div id = "Evaluation" style ="height:80%; width:70%">
+                    <div style = "float:left; height 99%; width: 45%;">
+                        <h1> Your efficiency </h1>
+                        <p> Score: <p>
+                        <img  title = "Low score" style = "height: 20%; width:20%;" src="images/RED.png" alt="Red" />
+                        <p> Your electricity consumption causes the emission of 500 kg  of CO2 per year. <br> <br> Efficient user with similar characteristics causes the emission of 200kg less<p>
+                    </div>
+                    <div style = "float:right; height:99; width: 45%;">
+                        <h1> Your footprint </h1>
+                        <p> 100 hectares are needed to take your emissions <br><br> if everyone emit the same amount of CO2 the planets temperature would increase 1.1 degrees per year</p>
+                    </div>
+                </div>
+                <div id = "Tips" style ="height:90%; width:70%">
+                    <div id ="subMenu2"  >
+                 <ul >
+                    <li> <a href="#Lighting">Lighting</a> </li>
+                     <li> <a href="#SA">Heating</a> </li>
+                     <li> <a href="#Insulation">Insulation</a> </li>
+                     <li> <a href="#Electroingenios">Electroingenios</a> </li>
+                     <li> <a href="#fridge">The fridge</a> </li>
+                     <li> <a href="#washing-machine">Washing-m</a> </li>
+                </ul>
+                <div id = "Lighting" style ="height:93%; float:right; width:60%; overflow: scroll">
+                    <p>Electricity is the appropriate energy for lighting, and can save a lot if we use high-performance lamps.<p>
+                    <br>
+                    <h3>Conduct. Options to improve efficiency</h3>
+                    <br>
+                   <p>Although not change any lamp, we have several options to improve the efficiency of lighting in our house:</p>
+                   <br>
+                    <p>1) The classic advice: turn off the light when leaving a room has become outdated. According to a study by the Center for Energy, Environment and Technology (CIEMAT) and the School of Telecommunications Engineering (ETSIT), the optimum time before turning off a fluorescent lamp energy saving is about 43 minutes, below that time emissions and the associated economic costs soar. </p>
+                    <br>
+                    <p>The aim of the research was to know if it is more convenient to turn off the light when leaving a room or if instead it is better to leave it on, the paper concludes that emissions and the economic cost are reduced, whether the lamp is running the minimum hours as possible if the number of switching on and off is reduced to a minimum. If the user wants to reduce energy consumption associated with the use of the lamp is recommended that the light goes on exit if it is not expected to return to that room before 43 minutes.</p>
+                    <br>
+                    <p> 2) A good measure is to use low-power lamps directed at the exact point where we need light-like a desk instead of very powerful lamps from the ceiling to illuminate a room.</p>
+                    <br>
+                    <p>3) The decorative lamp with many bulbs we have in the ceiling of the room can and should come on when there visits and celebrations, but should remain off the rest of the time.</p>
+                    <br>
+                    <p>4) Even the darkest homes can use sunlight. Often, simply lift a blind or bring the chair to the window. </p>
+                    <br>
+                    <h3> Ecological-DIY</h3>
+                    <br>
+                    <h5>Plan and build good lighting:</h5>
+                    <br>
+                    <p>Not a haggard bulb on the ceiling and a waste of directional lamps: good lighting should be pleasant, comfortable and efficient.
+                        In the case of internal lighting, a way to achieve considerable energy savings it is to incorporate flow reduction systems, which allow to reduce by 50% the light level and therefore consumption, from the time that we set. The introduction of these systems, which can regulate at the same time a large number of points of light, can be purchased on the market, are home automation to control lighting and temperature facilities.</p>
+                    <br>
+                    <h5>Automatismos para la iluminación</h5>
+                    <br>
+                    <p>On the market a number of gadgets that allow automatic control of lighting. They may pose a certain economy of energy. They are sold in kits to install them yourself:</p>
+                    <p>Presence detectors. They are able to turn off the light automatically when the room is empty of human presence. They work by a motion sensor connected to the lamp.</p>
+                    <p>Ambient light sensors. These devices consist of a light detector connected to the lamp. Turn off the light automatically when the intensity of sunlight reaches a certain level. (Of course, also the light when natural light decreases, so should be able to be turned off manually). Some energy saving lamps are marketed with a built-in sensor so that it is not necessary to install it separately.</p>
+                    <br>
+                    <br>
+                    <h3> Equipment renewal</h3>
+                    <br>
+                    <p> Proposed actions: replace conventional lamps with energy-efficient models </p>
+                    <br>
+                    <p>1) The first is to count the number of lamps we have at home, and evaluate their respective powers, which often go from 40 to 120 watts.</p>
+                    <br>
+                    <p>2) Then let us see what are lit longer (an average of more than two or three hours a day).</p>
+                    <br>
+                    <p>3) Probably we shall find that we have two or three lamps in this case. These are what we must replace, in principle, low consumption models.
+                    <br>
+                    <p>4) already in the store where we usually buy the bulbs should investigate low-power models available. The usual box equivalence is as follows:</p>
+                    <br>
+                    <p>The economizer 9 watt replace the 40, the 13 to the 60, the 18 to 75 and 25 to 100. Some brands offer even more energy-saving equivalents, for example 5/25; 7/40; 11/60; 15/75; 20/100 and 23/120. With regard to the average life, duration of conventional lamps usually 1,000 hours, and 10,000 for saving. These equivalences are usually included in the carton of lamps.</p>
+                    <br>
+                   <p>The energy efficiency of these lamps must exceed 40 lumen / watt, and life be over 8,000 hours. The container lamps also carries a similar energy tag used for appliances. The low power are invariably Class A, while incandescent do not pass the class F or G.</p>
+                   <br>
+                   <p>5) Other products for lighting energy economizers are electronic transformers for fluorescent, allowing instant on, save up to 30% energy, eliminate stroboscopic effect (the annoying flicker) and extend the life of the tube. There are many more economizers models, based on different technologies, on which we can obtain information on the manufacturers home. </p>
+                   <br>
+                    <p>6) Other products are in line of intelligent lighting, adapted to the changing environment. We can acquire dimmers (can not be used with fluorescent lamps) or even motion detectors that turn off the light automatically when the last person leaves the room.</p>
+                </div>
+                <div id ="SA" style ="height:93%; width:60%;float:right;  overflow: scroll">
+                    <p>Stoves, radiators and air conditioners consume energy to maintain a comfortable temperature inside our homes. How to get maximum comfort with minimum energy consumption?</p>
+                    <br>
+                    <p>In principle, everything depends on the climate zone where you are: if you live in the province of Avila or Soria, it is likely that the number of days with need to heat the house closer to 200 a year. By contrast, in the provinces of Almeria, this number may be less than 40 -in the coastal area. We can also evaluate the number of days with cooling demand in summer. With this in mind, you can see what the situation is closer to your particular case.</p>
+                    <br>
+                    <br>
+                    <h3> Conduct. Regulate temperature </h3>
+                    <p>You have a unique stove or a small air conditioner or a complete central heating system, the key is to properly regulate the temperature. This can be done in several ways:</p>
+                    <br>
+                    <p>1) Decide the comfort temperature you need. Usually it estimated (in the winter) in 19 or 20 degrees a suitable temperature; above 23 or 24, you're probably wasting fuel and money. The proper temperature would be between 25 and 27 degrees Celsius in the summer. Do not forget that the thermostat down one degree can save between 5 and 8% of energy.</p>
+                    <br>
+                    <p>2) Decide the location: the room must be conditioned, but probably the bedroom or kitchen need not just heating.</p>
+                    <br>
+                    <p>3) Decide when you want climatizar: rather than keep the heat all day, it may suffice to turn it on only early in the morning and then the late afternoon. The same is true of the use of air conditioning. Difficulty: if heating is not adjustable.</p>
+                    <br>
+                    <p>4) Use with blinds and curtains ability to improve the insulation of the house. For example, during the hottest hours of blinds and curtains closed will prevent between the sweltering heat outside.</p>
+                    <br>
+                    <p>5) Ventilate the house the essentials: just a few minutes to renew the air of the house (sure, however, that the house has its regulatory outputs gases). In winter, open windows only long enough. Ten minutes are enough to completely renew the air in a room.</p>
+                    <br>
+                    <p>6) The plants are excellent air conditioners, especially in summer. The evaporated water helps cool the atmosphere.</p>
+                    <br>
+                    <p>7) Take advantage of the possibilities of regulating your stoves and radiators: many have timers, thermostats and temperature regulators fine.</p>
+                    <br>
+                    <p> 8) Remember that good maintenance of the boiler increases performance.</p>
+                    <p> 9) Do not cover or put anything on the radiators, it hinders adequate diffusion of hot air.</p>
+                    <p>10) Take advantage of blinds and awnings to protect the housing peak hours in summer sunshine. In the winter time do just the opposite, lets the sun's heat.</p>
+                    <br>
+                    <p> 11) Close blinds and curtains at night to avoid losses.</p>
+                    <h3> Ecological-DIY</h3>
+                    <h5> Location </h5>
+                    <p> 1) Locate your moving parts heating or air conditioning in the most convenient location: it is best to place them in the center of the rooms, where they can cast their heat or cold in all directions. If placed near a window, for example, some of the heat or cold will escape through the glass.</p>
+                    <p>2) Sometimes, it is effective to place an insulating and reflective foil behind radiators. It will not escape the heat to the wall and the street.</p>
+                    <h5>Place a thermostat</h5>
+                    <br>
+                    <p>You install a small thermostat connected to it. It will make the system automatically turn off when the desired temperature is reached. Also they exist in the market timers then automatically connected the system: for example, we can regulate to turn on at 7 in the morning and to go out when we left home.</p>
+                    <h3> Equipment renewal </h3>
+                    <br>
+                    <h5>invest in a new system</h5>
+                    <br>
+                    <p>1) Acquire one or two radiators or stoves. In this case, the main factor is that models are as efficient as possible, and with many possibilities of regulation. For example, to heat a small room, a good option may be an oil cooler with power control, timer and thermostat. If the space to be conditioned is not very large, integrated air conditioning unit (which provides heating and air conditioning in a single device) may be sufficient. In general, we should flee from simple electric radiators resistance in sight.</p>
+
+                    <p>2) Install a complete heating system, individual.
+                    - As regards the fuel to be used, the most suitable in principle is natural gas. A combination boiler, which provides heat and hot water comes to cost about 900 euros. With a good system strategically placed thermostats, it can be a fairly inexpensive alternative. Note the marking energy efficiency of heating boilers, are "stars" four for the most efficient and a star for less efficient.
+                        If we live in an isolated house, we can test the option of wood or briquettes.
+                    The electric heating has the (environmental) downside of their production model in thermal power stations, and a price that is not low. However, it will be cheaper if we use accumulator night rate (consume electricity at night when demand is lower and the price much lower, accumulate heat in devices passive storage and distributed when needed during the day) .</p>
+                    <p>3) Best option is still install an air conditioning system based on heat pump. The heat pump is a classic compression air conditioning, but with the peculiarity that can reverse its operating cycle, providing heating stays cold weather equipment. The indoor unit housing then functions as a condenser, giving into housing heat air intake of the street along with the energy consumed in the compressor. The theoretical performance of the installation can be 3 kWh of heat obtained for each kWh of electricity. It is considered, therefore, as a system much more economical and efficient heating than electric heating classic.</p>
+                    <h5>Steps for the proper installation of air conditioning</h5>
+                    <br>
+                    <p>1) Before you go shopping is convenient that you reports on the types of equipment that you can agree more. A first assessment: only laptops and do not require installation window, the rest yes.</p>
+                    <p>2) Do not let vendors tell you what kind of equipment put in your home without having seen it before. Installers should visit the house to check room size, orientation ... this issue is more delicate of many people think.</p>
+                    <p>3) Note that the measurements of the house are not only on the square footage that is intended to acclimatize, assess factors such as the orientation of the room among the south and north may have varying degrees of differentiation, type of glazing it has, and the use that is given and the number of people who can occupy during the day.</p>
+                    <h5>When choosing radiators</h5>
+                    <br>
+                    <p>Usually, the most common radiators are aluminum and cast iron. Each has characteristics and specific yields and, aluminum radiators are the most requested, because heat and cool quickly and are very good transmitters of heat. On the other hand, cast iron have the advantage that retain heat longer and release energy more steadily, but take much longer to heat than aluminum.
+                    But to be the latest in technology, we can take a look at the Energy savers and energy savers. These radiators created by a Belgian company reduce energy consumption by 12% and also save water (2 liters compared to twenty that is consumed by a standard radiator).
+                    It is made of aluminum and copper, transmit heat very effectively and respond almost immediately to on or off. In addition, it emits one ton less CO2 than a conventional radiator.
+                    It has different models with an outer sheath of a design called Knockonwood, made with wood from sustainable forests.</p>
             </div>
+            <div id= "Insulation"style ="height:93%; width:60%;float:right;  overflow: scroll">
+                <p>Good insulation minimizes air conditioning needs of the house. It also helps to reduce the impact of street noise inside the house. Here we offer insulation solutions for each case, from the simplest to the most complete.</p>
+                <h3>Conduct</h3>
+                <br>
+                <h5>Evaluate the thermal performance of your home</h5>
+                <p>1) If it is an interior floor, stuffed inside a building, it is likely that the thermal insulation is good (although perhaps light is scarce). By contrast, an attic can be very cold in winter and very hot in summer.</p>
+                <p>2) The old buildings built before 1900, usually have thick walls, reducing heat loss or cold.</p>
+                <p>3) The large glass surfaces facing the sun will warm us in winter, but they create a greenhouse effect in summer the temperature rise much.</p>
+                <p>Watch ventilation</p>
+                <p>1) Keep in mind that doors and windows are the weakest points of the house. The heat escapes quickly through the framework of a maladjusted, or through conventional glass windows of a few millimeters thick.</p>
+                <p>2) Of course, we must consider the need to ventilate the house. It is necessary to renew the air, but, usually, just a few minutes.</p>
+                <h3> Ecological-DIY</h3>
+                <p>1) The first is to make a list of weak points where heat escapes: especially door frames and windows. Some poorly fitting windows and doors leak lot of hot air in winter, and we will continue shivering even put the oven at full power.</p>
+                <p>2) Find out the neighborhood hardware store on supply of insulating weatherstripping. Purchase the amount needed and install them in the chosen points.</p>
+                <p>The most effective are the rubber weatherstrip, which are more expensive than foam. The first is to measure the amount of material needed and cut the appropriate width.</p>
+                <p>Then the strips are cut to the exact measurements and placed starting from a corner. For the protection is total, the strips facing in the fixed part of the window looking out and moving inward stick.</p>
+                <p>3) You can place a seal at the bottom of the door, as a rubber skirt or other material.</p>
+                <P>4) It may be a good idea to replace other thicker curtains. You can also install light shutters or blinds, especially useful to protect the house from summer heat. Some manufacturers sell reflective blinds, especially suitable for skylight windows facing the sun.</P>
+            </div>
+            <div id ="Electroingenios" style ="height:93%; width:60%;float:right;  overflow: scroll">
+                <p>The electroingenios are a varied collection of machines that use electricity to operate and perform many functions operated toothbrushes, open cans, printed documents, dry hair, transmit images and sounds, shine shoes, shave the beard, ironing clothes, sting vegetables, squeeze oranges, or process information. How can we use with the least possible impact on the environment?</p>
+                <h3> Conduct </h3>
+                <br> 
+                <h5>Turn off completely</h5>
+                <p>Then completely disconnect these devices when we leave home or just when you are not going to use them for several hours. It has been found that consumption in "stand by" during the hours when in this mode, in some cases, can amount to the consumption of the appliance in the hours of full operation. If a family pays on average 650 euros per year of electricity bills, about 54 are energy dissipated by the appliances that are waiting to become operational. The "stand by" is the fourth head of the electricity consumption of appliances, according to the first "Study on energy consumption in the residential sector in Spain", presented by the Institute for Diversification and Saving of Energy (IDAE). With regard to computers, for periods longer than one hour inactivity, it is recommended to turn off the computer, but at this point there are discrepancies between experts and manufacturers. An important part of the electrical energy is wasted by multiple extension cords and plugs thieves, but if those power strips have a switch can save power by turning the power strip. The newest and comfortable option is the intelligent power strips, detect when a device is in standby and off completely. The company offers some GBO and Belkin Conserve with others.
+                </p>
+            </div>
+            <div id = "fridge" style ="height:93%; width:60%;float:right;  overflow: scroll">
+                <p>The refrigerator is one of the inventions that have changed our way of life. The refrigeration industry has revolutionized food consumption habits, but also triggered power consumption. Also a refrigerator, by their bulky size, means a residue of special treatment.
+                Here you will see how to purchase one of good quality and eco-efficient, how to use it properly, and how to get rid of him at the end of its useful life.</p>
+                <h3> Conduct </h3>
+                <br>
+                <p>The refrigerator allows us to have fresh food all year round.But also on 24 hours a day, 365 days a year. How can we take advantage of it while reducing energy consumption? Whatever our refrigerator model, we can do many things for their energy consumption is minimized.<p>
+                <h5>Heat away</h5>
+                <br>
+                <p>If the device is located in a very hot environment -pegado to a kitchen, for example heat transfer within the unit to the outside you will need more energy.</p>
+                <h5>Close</h5>
+                <br>
+                <p>Leave the door open longer than absolutely necessary cause a similar effect of energy wastage.</p>
+                <h5>Unfreeze</h5>
+                <br>
+                <p>If the model is not the type "frost-free" (no frost, so to speak), a thick layer of ice will form in a few months in the freezer. If not regularly defrosted the appliance, the engine will have to work to keep frozen forced several kilos of ice formed.</p>
+                <h5> Wait</h5>
+                <br>
+                <p>Something that almost everyone does, but it is worth remembering: should wait for cooked food to room temperature before placing in the fridge. Very hot foods forces the engine to work at full capacity to again reach the storage temperature.</p>
+                <h3> Equipment renewal </h3>
+                <br>
+                <h5>When buying a new refrigerator?</h5>
+                <br>
+                <p>In principle, if the age of the model we have in the kitchen over 10 years, we are probably losing money. Older devices have a very low energy efficiency, and some are real power sinks.</p>
+                <h5>What size to choose?</h5>
+                <p>Existe una tendencia actual a comprar frigoríficos cada vez más grandes, por encima de los 300 o incluso 400 litros. Son populares los modelos de dos puertas, con un gran departamento para congelados. Estos modelos son eficaces cuando gran número de personas habitan en la casa, pero la mayoría de los hogares se pueden apañar muy bien con un modelo de dimensiones más reducidas, más barato y con menor consumo de energía.</p>
+                <h5>What model?</h5>
+                <p>The choice is clear: a model of energy class A. (Better yet if A + or A ++) guarantees consumption significantly reduced compared to conventional models. The A ++ consumes only 30% energy compared to a conventional model.</p>
+                <p>We only have to check the energy label of the device. All the refrigerated hold.</p>
+                <p>In addition, look at the labeling of the working temperature model which is expressed from 1 to 4 stars (*).</p>
+                    <p>*: The device can maintain a temperature of -6 ° C.</p>
+                    <p>**: The device can maintain a temperature of -12 ° C.</p>
+                    <p>***: The device can maintain a temperature of -18 ° C.</p>
+                    <p>****: The device can maintain a higher temperature of -18 ° C.</p>
+            </div>
+            <div id = "washing-machine" style ="height:93%; width:60%;float:right;  overflow: scroll">
+                <p>The washing machine has completed more than 100 years, since 1901 when the American engineer Alva J. Fisher invented the first electric washing machine. However, it was not until electricity became a massive service that popularized the washing machine.In some countries it is widely used industrial washing machine, ie washing service, as the costs become more profitable go to a site washing and ironing to acquire a family washing machine. But in Spain it is usual to have a washing machine at home.This useful appliance has freed us from the hard task of lathering, beat, hit, scrub and rinse the clothes, which once time-consuming, especially women.Now we can use it to wash our clothes ... much better using less water and energy.</p>
+                <h3>Conduct</h3>
+                <p>1) In cold, the simplest option: moves the temperature gauge to the "cold water" position and leave it alone ... unless that it is really greasy clothes. 90% of electricity consumption of the washing machine is used to heat water, not to rotate the drum.</p>
+                <p>2) Well full: it comes to space filling the tank completely washed clothes. An advantage of the system is that it'll work less to have your clothes clean.</p>
+                <p>3) Short Program: If you have habit of using long programs, ensures that your next wash program with either a two or three short positions. You will see how the clothes come out just as clean.</p>
+                <p>4) Less detergent: Try to halve the amount of detergent you employ and examines the results. Most likely not notice the difference.</p>
+                <p>5) If you have dry, or your washing machine incorporates a drying program, do not use it consistently. Hold out your clothes in the sun and the air whenever possible</p>
+            </div>
+        </div>
+    </div>
+    </div>
     </body>
 </html>
