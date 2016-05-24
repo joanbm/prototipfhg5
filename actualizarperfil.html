@@ -5,18 +5,416 @@
         <title>SaveMate - Update My Profile</title>
         <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.min.css">
         <link rel="stylesheet" href="js/libs/jquery-ui-1.11.4/jquery-ui.theme.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="css/global.css">
         <link rel="stylesheet" href="css/tabs-custom.css">
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
         <script src="js/libs/jquery-2.2.3.min.js"></script>
         <script src="js/libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <link rel="stylesheet" href="/resources/demos/style.css">
+
         <script>
+
+
+       /* $(function() {
+            $( "#draggable" ).draggable();
+        });
+*/
+
+
         $(function() {
             // Tabs
             $( "#tabs" ).tabs({ active: 3 });
-            $("#tabs>ul>li>a").unbind("click");         
+            $("#tabs>ul>li>a").unbind("click");
+
+
+            var botonesSaveBack = document.getElementById("botonesSaveBack");
+
+            botonesSaveBack.style.display="none";
+
+            var editButton = document.getElementById("editButton");
+            editButton.style.display="none";
+
+            var img = document.getElementById("plano");
+
+            //var imagenLed = document.getElementById("imagenLed");
+            //var liled = document.getElementById("liLed");
+
+            //liled.style.listStyleImage = imagenLed;
+
+            var botonLiving = document.getElementById("buttonLivingRoom");
+            var botonBedroom3 = document.getElementById("buttonBedroom3");
+            var botonBedroom2 = document.getElementById("buttonBedroom2");
+            var botonBedroom1 = document.getElementById("buttonBedroom1");
+            var botonBath = document.getElementById("buttonBath");
+            var botonKitchen = document.getElementById("buttonKitchen");
+
+
+/*
+            var img = document.getElementById('plano');
+            var botonLiving = document.getElementById('buttonLivingRoom');
+
+            botonLiving.onclick = function(){
+                img.animation = zoom 3s;
+            }*/
+// Get the modal
+            var modal = document.getElementById("dialog-opened");
+            var modalAdding = document.getElementById("dialog-adding");
+// Get the button that opens the modal
+            var btn = document.getElementById("dialog-addroom");
+
+            var btnSave = document.getElementById("save");
+            var btnBack = document.getElementById("back");
+
+// Get the <span> element that closes the modal
+            var cancel = document.getElementById("close");
+            var accept = document.getElementById("accept");
+            var cancelAdding = document.getElementById("closeAdding");
+            var acceptAdding = document.getElementById("acceptAdding");
+
+            var text1 = document.getElementById("text1");
+            var textoInicial = document.getElementById("texto1");
+            var inputSearch = document.getElementById("Search");
+            var bool=0;
+
+
+            btnSave.onclick = function(){
+                botonLiving.style.display="inline-block";
+                botonKitchen.style.display="inline-block";
+                botonBath.style.display="inline-block";
+                botonBedroom1.style.display="inline-block";
+                botonBedroom2.style.display="inline-block";
+                botonBedroom3.style.display="inline-block";
+                btn.style.display="inline-block";
+                text1.style.display="inline-block";
+                textoInicial.style.display="inline-block";
+
+                textoInicial.innerHTML="Choose the room where add you appliances:";
+                //textoInicial.style.display="none";
+                inputSearch.style.display="none";
+                botonesSaveBack.style.display="none";
+                editButton.style.display="none";
+
+                img.src="images/plano2.png";            }
+
+            btnBack.onclick = function(){
+                botonLiving.style.display="inline-block";
+                botonKitchen.style.display="inline-block";
+                botonBath.style.display="inline-block";
+                botonBedroom1.style.display="inline-block";
+                botonBedroom2.style.display="inline-block";
+                botonBedroom3.style.display="inline-block";
+                btn.style.display="inline-block";
+                text1.style.display="inline-block";
+                textoInicial.style.display="inline-block";
+
+                textoInicial.innerHTML="Choose the room where add you appliances:";
+                //textoInicial.style.display="none";
+                inputSearch.style.display="none";
+                botonesSaveBack.style.display="none";
+                editButton.style.display="none";
+
+                img.src="images/plano2.png";
+
+            }
+
+
+            botonLiving.onclick = function(){
+                img.style.animation="zoom 4s";
+
+
+
+                botonLiving.style.display="none";
+                botonKitchen.style.display="none";
+                botonBath.style.display="none";
+                botonBedroom1.style.display="none";
+                botonBedroom2.style.display="none";
+                botonBedroom3.style.display="none";
+                btn.style.display="none";
+                text1.style.display="none";
+                textoInicial.style.display="none";
+                bool=1;
+                setTimeout(function(){
+                    if(bool==1){
+                        img.src="images/living.png";
+                        img.width="652.5";
+                        img.height="388.5";
+                        textoInicial.innerHTML="Add appliances to the Living Room";
+                        textoInicial.style.display="block";
+                        inputSearch.style.display="block";
+                        botonesSaveBack.style.display="block";
+                    }
+                },4000);
+                return false;
+            }
+
+// When the user clicks on the button, open the modal
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            cancel.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            accept.onclick = function() {
+                modal.style.display = "none";
+            }
+            acceptAdding.onclick = function() {
+                modalAdding.style.display = "none";
+            }
+
+            cancelAdding.onclick = function() {
+                modalAdding.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            $( "#accordion" ).accordion({
+                collapsible:true,
+                heightStyle : "content"
+            });
+            $("#accordion li").draggable({
+                helper : "clone",
+                appendTo : "body"
+            });
+            $("#droppable").droppable({
+                activeClass: "ui-state-default",
+                hoverClass: "ui-state-hover",
+                //accept: ":not(.ui-sortable-helper)",
+                drop : function( event, ui ) {
+                    //editButton.style.display="block";
+                    modalAdding.style.display="block";
+                    $("<img></img>").src(ui.draggable.src()).appendTo(this);
+
+
+                }
+            });
+
+
+
         });
         </script>
+        <style>
+
+
+            .inputElectros{
+                display: none;
+            }
+
+
+            .boton1{
+                display: inline-block;
+                text-align: right;
+                vertical-align: center;
+            }
+
+            .buttonKitchen{
+                display: inline-block;
+                position: absolute;
+                right: 52%;
+                top : 42%;
+            }
+            .buttonBedroom3{
+                display: inline-block;
+                position: absolute;
+                right: 67%;
+                top : 42%;
+            }
+            .buttonBedroom1{
+                display: inline-block;
+                position: absolute;
+                right: 82%;
+                top : 42%;
+            }
+            .buttonLivingRoom{
+                display: inline-block;
+                position: absolute;
+                right: 63%;
+                top : 75%;
+            }
+            .buttonBath{
+                display: inline-block;
+                position: absolute;
+                right: 81%;
+                top : 59.5%;
+            }
+            .buttonBedroom2{
+                display: inline-block;
+                position: absolute;
+                right: 82%;
+                top : 83%;
+            }
+
+            .wrapper {
+                height:100%;
+                width:100%;
+                height:auto;
+                /* border:1px solid green; */
+                vertical-align: middle;
+                font-size: 0;
+                margin-bottom: 10px;
+            }
+
+            .left-div50 {
+                width: 50%;
+                /* border:1px solid blue; */
+                display: inline-block;
+                font-size: initial;
+                text-align: center;
+
+                /* IE 7 hack */
+                *zoom:1;
+                *display: inline;
+                vertical-align: top;
+            }
+
+
+            .left-div {
+                width: 65%;
+                /* border:1px solid blue; */
+                display: inline-block;
+                font-size: initial;
+                text-align: center;
+
+                /* IE 7 hack */
+                *zoom:1;
+                *display: inline;
+                vertical-align: top;
+            }
+
+            .right-div {
+                width: 35%;
+                /* border:1px solid red; */
+                display: inline-block;
+                font-size: initial;
+
+                /* IE 7 hack */
+                *zoom:1;
+                *display: inline;
+                vertical-align: top;
+            }
+
+            .right-div50 {
+                width: 35%;
+                /* border:1px solid red; */
+                display: inline-block;
+                font-size: initial;
+
+                /* IE 7 hack */
+                *zoom:1;
+                *display: inline;
+                vertical-align: top;
+            }
+
+
+            .modal-header{
+                padding: 2px 16px;
+                background-color: grey;
+                color : white;
+            }
+
+            .modal.body{
+                padding: 2px 16px;
+            }
+
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            .modalAdding {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+
+            /* Modal Content/Box */
+            .modal-content {
+
+                position: relative;
+                background-color: #fefefe;
+                margin: auto; /* 15% from the top and centered */
+                padding: 0;
+                border: 1px solid #888;
+                width: 40%; /* Could be more or less, depending on screen size */
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            }
+
+            /* The Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+
+            .draggablesImages{
+                display: none;
+            }
+
+            .liled{
+                list-style-image: url("images/led.jpg");
+
+                /*list-style-size: 3px 3px;*/
+            }
+
+            @keyframes zoom{
+                from{
+                    transform-origin : bottom center;
+                    transform : scale(1,1);
+                }
+                to{
+                    transform-origin : bottom center;
+                    transform : scale(1.6,1.6);
+                }
+            }
+
+            #accordion {  }
+            #droppable { }
+
+            /*transform-origin: bottom center;*/
+/*
+            img{
+                animation : zoom 3s;
+
+            }
+*/
+        </style>
+
+
     </head>
     <body>
         <div id="tabs">
@@ -30,8 +428,198 @@
                     <a href="inicial.html"> Log out </a>
                 </div>
             </ul>
-            <div id="tab-current">
-                Por hacer.
+            <div id="tab-current" position = "relative">
+
+
+                <div class="wrapper">
+                    <div class="left-div" id ="droppable">
+                        <p id="texto1" align="center">Choose the room where add you appliances:</p>
+                        <div id="droppable" class="ui-widget-content">
+                            <div class ="placeholder">
+                                <img src="images/plano2.png" id="plano">
+                            </div>
+                        </div>
+                        <input type = "button" class="buttonKitchen" id="buttonKitchen" value="+"/>
+                        <input type = "button" class="buttonBedroom1" id="buttonBedroom1" value="+"/>
+                        <input type = "button" class="buttonBedroom2" id="buttonBedroom2" value="+"/>
+                        <input type = "button" class="buttonBedroom3" id="buttonBedroom3" value="+"/>
+                        <input type = "button" class="buttonBath" id="buttonBath" value="+"/>
+
+                        <button id="buttonLivingRoom" class="buttonLivingRoom">+</button>
+                        <div class="wrapper" id="botonesSaveBack">
+                            <div class="left-div50">
+                                <input type = "button" id="save" value = "Save"></input>
+                            </div>
+                            <div class="right-div50">
+                                <input type = "button" id="back" value = "Back"></input>
+                            </div>
+                        </div>
+                        <div>
+                            <input type = "button" id="editButton" value="Edit Information"></input>
+                        </div>
+                    </div>
+                    <div class = "right-div">
+                        <p align="left" id="text1">  <br><br><br><br><br><br> Some room does not appear in this design?<br><br><br></p>
+
+                        <div id="Search" class="inputElectros">
+                            <br><br><br><br><br><br>
+                            <input type="text" value="Search"/>
+                            <div id="accordion" class="ui-widget-header">
+                                <h3>Lighting</h3>
+                                <div>
+                                    <span>
+                                        <ul style="list-style-type: none; display:inline-block">
+                                            <li><img src="images/led.jpg" id="draggable"></li>
+                                            <li><img src="images/fluo.jpg" id="draggable"></li>
+                                            <li><img src="images/halogena.jpg" id="draggable"></li>
+
+                                        </ul>
+                                        <ul style="list-style-type: none; display:inline-block">
+                                            <li>LED lighting</li>
+                                            <br>
+                                            <li>Lighting fluorescent</li>
+                                            <br>
+                                            <li>Halogen Light Bulb</li>
+                                        </ul>
+                                    </span>
+                                </div>
+                                <h3>Refrigeration</h3>
+                                <div>
+
+                                </div>
+                                <h3>Cooking</h3>
+                                <div>
+
+
+                                </div>
+                                <h3>Entertainment</h3>
+                                <div>
+
+                                </div>
+
+                                <h3>Office</h3>
+                                <div>
+                                </div>
+                                <h3>Others</h3>
+                                <div>
+                                </div>
+                            </div>
+
+                        </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type = "button"  class = "boton1" id ="dialog-addroom" value = "Add room"/>
+
+
+                    </div>
+                </div>
             </div>
+        </div>
+
+
+
+        <div id="dialog-opened" class="modal" title="Adding room">
+            <div class="modal-content">
+                <div class = "modal-header">
+                    <span class="close">x</span>
+                    <p align="center">Room Information</p>
+                </div>
+                <div class = "modal-body">
+
+                    <div>
+                    &nbsp;&nbsp;&nbsp;
+                        <label>Room name:</label>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="text" id="room-name"></input>
+                        <br><br><br>
+                        &nbsp;&nbsp;&nbsp;
+                        <label> Room type: </label>
+
+                        <form>
+                        &nbsp;&nbsp;&nbsp;
+                            <select name="room-types">
+                                <option>Bedroom</option>
+                                <option>Bathroom</option>
+                                <option>Garage</option>
+                                <option>Office</option>
+                                <option>Garden</option>
+                            </select>
+
+                        </form>
+                    </div>
+
+                    <div class="wrapper">
+                        <div class="left-div50">
+                            <input type = "button" class="close" id="accept" value = "Confirm"></input>
+                        </div>
+                        <div class = "right-div50">
+                            <input type = "button" class="close" id="close" value = "Delete"></input>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dialog-adding" class="modalAdding" title="Adding appliance - Living Room">
+            <div class="modal-content">
+                <div class = "modal-header">
+                    <span class="close">x</span>
+                    <p align="center">Room Information</p>
+                </div>
+                <div class = "modal-body">
+                    <label align="center"> Technical Information</label>
+                    <div>
+                    &nbsp;&nbsp;&nbsp;
+                        <label>Name:</label>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="text" id="appliance-name"></input>
+                        <br><br><br>
+                        &nbsp;&nbsp;&nbsp;
+                        <label> Watts: </label>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="number" id="watts"></input>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;
+                        <label> Efficiency:</label>
+                        <br>
+                        <form>
+                        &nbsp;&nbsp;&nbsp;
+                            <select name="efficiencies">
+                                <option>A</option>
+                                <option>B</option>
+                                <option>C</option>
+                                <option>D</option>
+                                <option>E</option>
+                            </select>
+
+                        </form>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;
+                        <label>User per week</label>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="number">Hours</input>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="number">Minutes</input>
+
+                    </div>
+
+                    <div class="wrapper">
+                        <div class="left-div50">
+                            <input type = "button" class="close" id="acceptAdding" value = "Confirm"></input>
+                        </div>
+                        <div class = "right-div50">
+                            <input type = "button" class="close" id="closeAdding" value = "Delete"></input>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
