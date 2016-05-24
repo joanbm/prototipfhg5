@@ -20,21 +20,34 @@
 
         }
     </script>
-    <style>
-        .logo
-        {
-            text-align: center;
-            font-size: 40px;
-        }
-
-        .logo > img
-        {
-            width: 50px;
-            left: 50%;
-            right: 50%;
-        }
-    </style>
 </head>
+<style>
+    IMG.displayed {
+        display: block;
+        margin-left: auto;
+        margin-right: auto
+    }
+    .submit {
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color .2s ease;
+        position: relative;
+        cursor: pointer;
+
+        width: 100%;
+        margin: 0;
+        margin-top: 10px;
+        line-height: 58px;
+        padding: 0;
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 3px;
+        background-color: #088A08;
+        color: white;
+    }
+
+</style>
 <body>
 <div id="tabs">
     <!--
@@ -47,27 +60,29 @@
                 </ul>
     -->
     <div id="tab-current" style="overflow:hidden; position: relative;">
-        <div style="bottom: 85%;">
-            <img src="images/logo_lletra.jpg" align="center"/>
+        <div style="bottom: 85%; ">
+            <IMG class="displayed" src="images/logo_lletra.jpg"/>
         </div>
         <div style="top: 20%; width: 40%; float:left;">
-            <img src="images/intro_image.jpg" width="100%;" />
+            <img class="displayed" src="images/intro_image.jpg" width="100%;" />
         </div>
         <div style = "top: 20%; width: 55%; float:right;">
             <h1> Login </h1>
-            <div style="text-align: center;">
+            <div style="left:70%; text-indent: 150px;">
                 <p> or </p>
-                <a href="crearcompte.html" id='create-account-link'> create an accounnt </a>
+            </div>
+            <div style="text-align: center;">
+                <a href="crearcompte.html" id='create-account-link' > create an account </a>
             </div>
             <br>
             <form method = "post" enctype="text/plain">
                 Email address:
-                <input type="text" name="email" size="20"><br><br>
+                <input type="text" name="email" size="40"><br><br>
                 Password:
                 <input type="text" name="password" size="40">
                 <br><br>
-                <input type="checkbox" name="remember" value="remember">Remember me<br><br>
-                <input type="button" onclick="location.href='principal.html'" value="Log in" />
+                <input type="checkbox" name="remember" value="remember">Remember me
+                <a class="submit" href="./principal.html">Log in</a>
             </form>
         </div>
     </div>
